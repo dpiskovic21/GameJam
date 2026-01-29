@@ -10,5 +10,6 @@ namespace WinFormsApp1.models
     {
         public int Value { get; set; }
         public String CardBackImagePath { get; set; }
+        public Bitmap CardImage { get; set; }
     }
 }
