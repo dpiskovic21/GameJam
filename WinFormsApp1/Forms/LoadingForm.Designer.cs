@@ -1,6 +1,6 @@
-﻿namespace WinFormsApp1
+﻿namespace WinFormsApp1.Forms
 {
-    partial class MainForm
+    partial class LoadingForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,34 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
             SuspendLayout();
             // 
-            // button1
+            // LoadingForm
             // 
-            button1.Location = new Point(263, 911);
-            button1.Name = "button1";
-            button1.Size = new Size(94, 29);
-            button1.TabIndex = 0;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // MainForm
-            // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ControlDarkDark;
-            ClientSize = new Size(1902, 1033);
-            Controls.Add(button1);
-            Name = "MainForm";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "MainForm";
-            WindowState = FormWindowState.Maximized;
+            BackgroundImage = Properties.Resources.loading;
+            ClientSize = new Size(1904, 1041);
+            Name = "LoadingForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "LoadingForm";
+            Load += LoadingForm_Load;
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Button button1;
     }
 }
