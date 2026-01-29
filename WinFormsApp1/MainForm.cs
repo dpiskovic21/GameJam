@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsApp1.enums;
 using WinFormsApp1.models;
 
 namespace WinFormsApp1
@@ -27,14 +28,23 @@ namespace WinFormsApp1
             {
                 for (int j = -5; j < 6; j++)
                 {
+                    CardTypeEnum cardType = CardTypeEnum.Light;
                     if (j == 0)
                     {
                         continue;
                     }
+
+                    if (j < 0)
+                    {
+                        cardType = CardTypeEnum.Dark;
+                    }
+
                     Card card = new Card()
                     {
                         Value = j,
-                        CardBackImagePath = "shit"
+                        CardBackImagePath = "..\\..\\..\\resources\\placeholder.png",
+                        CardTypeEnum = cardType,
+                        CardImage = new Bitmap("..\\..\\..\\resources\\placeholder.png")
                     };
 
                     initDeck.Add(card);
