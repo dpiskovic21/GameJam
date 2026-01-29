@@ -10,11 +10,11 @@ using System.Windows.Forms;
 using WinFormsApp1.enums;
 using WinFormsApp1.models;
 
-namespace WinFormsApp1
+namespace WinFormsApp1.Forms
 {
-    public partial class MainForm : Form
+    public partial class MainPlayAreaForm : Form
     {
-        public MainForm()
+        public MainPlayAreaForm()
         {
             InitializeComponent();
             this.InitializeDeck();
