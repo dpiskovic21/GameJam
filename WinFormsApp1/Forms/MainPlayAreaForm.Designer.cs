@@ -90,7 +90,6 @@
             // 
             // btnDeck
             // 
-            btnDeck.Font = new Font("Segoe UI", 20F);
             btnDeck.Location = new Point(1668, 699);
             btnDeck.Name = "btnDeck";
             btnDeck.Size = new Size(157, 199);
@@ -101,19 +100,17 @@
             // labelCurrentHandBalance
             // 
             labelCurrentHandBalance.AutoSize = true;
-            labelCurrentHandBalance.Font = new Font("Segoe UI", 20F);
             labelCurrentHandBalance.Location = new Point(43, 847);
             labelCurrentHandBalance.Name = "labelCurrentHandBalance";
-            labelCurrentHandBalance.Size = new Size(0, 37);
+            labelCurrentHandBalance.Size = new Size(0, 15);
             labelCurrentHandBalance.TabIndex = 6;
             // 
             // labelEnergy
             // 
             labelEnergy.AutoSize = true;
-            labelEnergy.Font = new Font("Segoe UI", 20F);
             labelEnergy.Location = new Point(1668, 650);
             labelEnergy.Name = "labelEnergy";
-            labelEnergy.Size = new Size(0, 37);
+            labelEnergy.Size = new Size(0, 15);
             labelEnergy.TabIndex = 7;
             // 
             // altarCard1
@@ -143,15 +140,13 @@
             // labelDay
             // 
             labelDay.AutoSize = true;
-            labelDay.Font = new Font("Segoe UI", 50F);
             labelDay.Location = new Point(637, 35);
             labelDay.Name = "labelDay";
-            labelDay.Size = new Size(0, 89);
+            labelDay.Size = new Size(0, 15);
             labelDay.TabIndex = 11;
             // 
             // btnEndRound
             // 
-            btnEndRound.Font = new Font("Segoe UI", 20F);
             btnEndRound.Location = new Point(1668, 960);
             btnEndRound.Name = "btnEndRound";
             btnEndRound.Size = new Size(157, 43);
@@ -163,10 +158,9 @@
             // labelCurrentBalance
             // 
             labelCurrentBalance.AutoSize = true;
-            labelCurrentBalance.Font = new Font("Segoe UI", 30F);
             labelCurrentBalance.Location = new Point(1417, 593);
             labelCurrentBalance.Name = "labelCurrentBalance";
-            labelCurrentBalance.Size = new Size(0, 54);
+            labelCurrentBalance.Size = new Size(0, 15);
             labelCurrentBalance.TabIndex = 13;
             // 
             // btnCancelSwap

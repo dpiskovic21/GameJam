@@ -1,4 +1,5 @@
-﻿using WinFormsApp1.Game;
+﻿using WinFormsApp1.Assets;
+using WinFormsApp1.Game;
 using WinFormsApp1.models;
 
 namespace WinFormsApp1.Forms
@@ -13,6 +14,7 @@ namespace WinFormsApp1.Forms
         public MainPlayAreaForm()
         {
             InitializeComponent();
+
             gpReplacePrompt.Hide();
             GameState.StartNewGame();
 
@@ -52,6 +54,7 @@ namespace WinFormsApp1.Forms
             }
 
             labelCurrentHandBalance.Text = "Current hand balance: " + GameState.Hand.Select(x => x?.Value ?? 0).Sum().ToString();
+            labelCurrentHandBalance.Font = new Font(CustomFont.pfc.Families[0], 10);
             btnDeck.Text = Deck.ShuffledDeck.Count.ToString() + " / 60";
             labelEnergy.Text = GameState.AvailableEnergy + " Energy Remaining";
             labelDay.Text = "Day " + GameState.Day + " / 7";
