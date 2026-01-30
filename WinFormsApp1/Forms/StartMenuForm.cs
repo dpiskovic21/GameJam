@@ -17,7 +17,7 @@
             btnStart.Left = (this.ClientSize.Width - btnStart.Width) / 2;
             btnStart.Top = (this.ClientSize.Height - btnStart.Height) / 2;
             btnExit.Left = (this.ClientSize.Width - btnStart.Width) / 2;
-            btnStart.Top = (this.ClientSize.Height - btnStart.Height * 5) / 2;
+            btnStart.Top = (this.ClientSize.Height - btnStart.Height * 10) / 2;
         }
 
         private void btnExit_Click(object sender, EventArgs e)

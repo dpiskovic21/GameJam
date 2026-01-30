@@ -34,10 +34,9 @@
             // 
             // btnStart
             // 
-            btnStart.Location = new Point(342, 244);
-            btnStart.Margin = new Padding(3, 4, 3, 4);
+            btnStart.Location = new Point(698, 205);
             btnStart.Name = "btnStart";
-            btnStart.Size = new Size(266, 120);
+            btnStart.Size = new Size(233, 90);
             btnStart.TabIndex = 0;
             btnStart.Text = "Start";
             btnStart.UseVisualStyleBackColor = true;
@@ -45,10 +44,9 @@
             // 
             // btnExit
             // 
-            btnExit.Location = new Point(818, 456);
-            btnExit.Margin = new Padding(3, 4, 3, 4);
+            btnExit.Location = new Point(682, 453);
             btnExit.Name = "btnExit";
-            btnExit.Size = new Size(266, 120);
+            btnExit.Size = new Size(233, 90);
             btnExit.TabIndex = 1;
             btnExit.Text = "Exit game";
             btnExit.UseVisualStyleBackColor = true;
@@ -56,13 +54,12 @@
             // 
             // StartMenuForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;
-            ClientSize = new Size(1902, 1033);
+            ClientSize = new Size(1904, 1041);
             Controls.Add(btnExit);
             Controls.Add(btnStart);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "StartMenuForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "StartMenuForm";
