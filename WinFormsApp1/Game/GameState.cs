@@ -29,6 +29,26 @@ namespace WinFormsApp1.Game
         public static List<Card> Hand { get; set; } = new List<Card>();
         public static List<Card> Altar { get; set; } = new List<Card>();
         public static int AvailableEnergy { get; set; }
+        public static int CurrentHandBalance
+        {
+            get
+            {
+                return Hand.Select(x =>
+                {
+                    if (x == null)
+                    {
+                        return 0;
+                    }
+
+                    if ((x.CardTypeEnum == CardTypeEnum.Light && RoundModifier == RoundModifierEnum.LightDoubleValue) || (x.CardTypeEnum == CardTypeEnum.Dark && RoundModifier == RoundModifierEnum.DarkDoubleValue))
+                    {
+                        return x.Value * 2;
+                    }
+
+                    return x.Value;
+                }).Sum();
+            }
+        }
         public static RoundModifierEnum RoundModifier;
         #endregion
 
@@ -133,7 +153,7 @@ namespace WinFormsApp1.Game
         {
             Array values = Enum.GetValues(typeof(RoundModifierEnum));
             Random random = new Random();
-            RoundModifier = RoundModifierEnum.EnergyDebuff;//(RoundModifierEnum)values.GetValue(random.Next(values.Length));
+            RoundModifier = (RoundModifierEnum)values.GetValue(random.Next(values.Length));
         }
 
         public static void DrawCards(int numberOfCardsToDraw, bool isPlayerDraw = true) //ak je isPlayerDraw false znaci da je to RoundStart draw od 5 karti

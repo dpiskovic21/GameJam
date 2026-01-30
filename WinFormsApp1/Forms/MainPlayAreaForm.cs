@@ -66,7 +66,7 @@ namespace WinFormsApp1.Forms
                 altarCards[i].Tag = GameState.Altar.ElementAtOrDefault(i);
             }
 
-            labelCurrentHandBalance.Text = "Current hand balance: " + GameState.Hand.Select(x => x?.Value ?? 0).Sum().ToString();
+            labelCurrentHandBalance.Text = "Current hand balance: " + GameState.CurrentHandBalance;
             labelCurrentHandBalance.Font = new Font(CustomFont.pfc.Families[0], 10);
             btnDeck.Text = Deck.ShuffledDeck.Count.ToString() + " / 60";
             labelEnergy.Text = GameState.AvailableEnergy + " Energy Remaining";
