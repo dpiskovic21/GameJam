@@ -104,7 +104,6 @@ namespace WinFormsApp1.Forms
             optionMoveToAltar.Click += (s, e) => MoveHandToAltar(card);
             optionReplaceWithAltarCard.Click += (s, e) => ReplaceWithAltarCard(card);
 
-            contextMenu.Items.AddRange(new ToolStripItem[] { optionMoveToAltar, optionReplaceWithAltarCard });
             contextMenu.Show(handCardControl, new Point(0, handCardControl.Height));
 
         }
