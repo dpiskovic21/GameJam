@@ -9,6 +9,7 @@ namespace WinFormsApp1.Game
         public const int EnergyAvailableEachTurn = 5;
         public const int MaxAltarSize = 3;
         public const int MaxDays = 7;
+        public const int MaxHandSize = 5;
         public readonly static Bitmap CardBackImage = new Bitmap("..\\..\\..\\resources\\placeholder.png");
 
         #endregion
@@ -119,15 +120,25 @@ namespace WinFormsApp1.Game
             }
 
             AvailableEnergy = EnergyAvailableEachTurn;
-            DrawCards(5);
+            DrawCards(5, false);
         }
 
-        public static void DrawCards(int numberOfCardsToDraw)
+        public static void DrawCards(int numberOfCardsToDraw, bool costsEnergy = true)
         {
+            if (AvailableEnergy == 0)
+            {
+                return;
+            }
             if (Deck.ShuffledDeck.Count < numberOfCardsToDraw)
             {
                 //TODO vidjeti kaj napraviti ak nema dosta karti
                 throw new Exception("Not enough cards in the deck.");
+            }
+
+            if (Hand.Count == MaxHandSize)
+            {
+                //neke vratit mozda da buda jasno na UI-u?
+                return;
             }
 
             var newCards = Deck.ShuffledDeck.Take(numberOfCardsToDraw).ToList();
@@ -139,7 +150,11 @@ namespace WinFormsApp1.Game
                 Deck.ShuffledDeck.Remove(card);
             }
 
-            Console.WriteLine("nekaj");
+            if (costsEnergy)
+            {
+                AvailableEnergy--;
+            }
+
         }
 
         #endregion

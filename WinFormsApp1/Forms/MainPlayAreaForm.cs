@@ -16,6 +16,12 @@ namespace WinFormsApp1.Forms
             UpdateUI();
         }
 
+        public void UpdateAll()
+        {
+            UpdateHand();
+            UpdateUI();
+        }
+
         public void UpdateHand()
         {
             handCard1.Tag = GameState.Hand.ElementAtOrDefault(0);
@@ -28,7 +34,7 @@ namespace WinFormsApp1.Forms
             altarCard2.Tag = GameState.Altar.ElementAtOrDefault(1);
             altarCard3.Tag = GameState.Altar.ElementAtOrDefault(2);
 
-            labelCurrentHandBalance.Text = "Current hand balance: " + GameState.Hand.Select(x => x.Value).Sum().ToString();
+            labelCurrentHandBalance.Text = "Current hand balance: " + GameState.Hand.Select(x => x?.Value ?? 0).Sum().ToString();
             btnDeck.Text = Deck.ShuffledDeck.Count.ToString() + " / 60";
             labelEnergy.Text = GameState.AvailableEnergy + " Energy Remaining";
         }
@@ -44,6 +50,69 @@ namespace WinFormsApp1.Forms
             altarCard1.Image = ((altarCard1.Tag) as Card)?.CardImage ?? GameState.CardBackImage;
             altarCard2.Image = ((altarCard2.Tag) as Card)?.CardImage ?? GameState.CardBackImage;
             altarCard3.Image = ((altarCard3.Tag) as Card)?.CardImage ?? GameState.CardBackImage;
+        }
+
+        private void handCard1_Click(object sender, EventArgs e)
+        {
+            Card? card = (handCard1.Tag as Card);
+
+            if (card != null)
+            {
+                GameState.MoveHandToAltar(card);
+                UpdateAll();
+            }
+
+        }
+
+        private void handCard2_Click(object sender, EventArgs e)
+        {
+            Card? card = (handCard2.Tag as Card);
+
+            if (card != null)
+            {
+                GameState.MoveHandToAltar(card);
+                UpdateAll();
+            }
+        }
+
+        private void handCard3_Click(object sender, EventArgs e)
+        {
+            Card? card = (handCard3.Tag as Card);
+
+            if (card != null)
+            {
+                GameState.MoveHandToAltar(card);
+                UpdateAll();
+            }
+
+        }
+
+        private void handCard4_Click(object sender, EventArgs e)
+        {
+            Card? card = (handCard4.Tag as Card);
+
+            if (card != null)
+            {
+                GameState.MoveHandToAltar(card);
+                UpdateAll();
+            }
+        }
+
+        private void handCard5_Click(object sender, EventArgs e)
+        {
+            Card? card = (handCard5.Tag as Card);
+
+            if (card != null)
+            {
+                GameState.MoveHandToAltar(card);
+                UpdateAll();
+            }
+        }
+
+        private void btnDeck_Click(object sender, EventArgs e)
+        {
+            GameState.DrawCards(1);
+            UpdateAll();
         }
     }
 }
