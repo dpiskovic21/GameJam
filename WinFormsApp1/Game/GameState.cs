@@ -30,7 +30,7 @@ namespace WinFormsApp1.Game
         #endregion
 
 
-        #region actions
+        #region Game Control
 
         //TODO scoring nakon svakog turna za score;
         public static void StartNewGame()
@@ -79,35 +79,89 @@ namespace WinFormsApp1.Game
             Console.WriteLine("nekaj");
         }
 
-        public static void PlaceCardOnAltar(dynamic card) //Todo zamjeni dynamic s klasom
+        #endregion
+
+        #region Player Actions
+
+        public static bool MoveHandToAltar(Card card) //Todo zamjeni dynamic s klasom
         {
-            //treba neke vratit?
+            //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
+            //ili se sam prikze genericki tekst da nemre to npraviti
+            if (AvailableEnergy <= 0) return false;
+            if (Altar.Count >= MaxAltarSize) return false;
+            if (!Hand.Contains(card)) return false; // ak slucajne neke sjebeme na fronte
+
+            Hand.Remove(card);
+            Altar.Add(card);
+            AvailableEnergy--;
+
+            return true;
         }
 
-        public static void DiscardFromAltar(dynamic card) //Todo zamjeni dynamic s klasom
+        public static bool DiscardFromAltar(Card card) //Todo zamjeni dynamic s klasom
         {
+            //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
+            //ili se sam prikze genericki tekst da nemre to npraviti
+            if (AvailableEnergy <= 0) return false;
+            if (!Altar.Contains(card)) return false; // ak se slucajne neke sjebe na fronte
 
+            Altar.Remove(card);
+            AvailableEnergy--;
+
+            return true;
         }
 
-        public static void ReplaceHandAndAltarCards(dynamic cardHand, dynamic cardAltar) //Todo zamjeni dynamic s klasom
+        public static bool MoveAltarToHand(Card card) //Todo zamjeni dynamic s klasom
         {
+            if (AvailableEnergy <= 0) return false;
+            if (!Altar.Contains(card)) return false;
 
+            Altar.Remove(card);
+            Hand.Add(card);
+
+            AvailableEnergy--;
+
+            return true;
         }
 
-        private static void PerformAction()
-        {
-            if (GameState.AvailableEnergy == 0)
-            {
-                //nekak alert?
-                return;
-            }
+        #endregion
 
-            //...
-        }
+
+        #region End Turn Logic
 
         public static void EndTurn()
         {
-            GameState.Day++;
+            CalculateScore();
+
+            Hand.Clear();
+            Day++;
+
+            if (Day > MaxDays)
+            {
+                IsGameOver = true;
+            } 
+            else
+            {
+                StartTurn();
+            }
+        }
+
+        private static void CalculateScore()
+        {
+            int sum = 0;
+            foreach (var card in Hand)
+            {
+                sum += card.Value;
+            }
+
+            CurrentBallance = sum;
+
+            //ak je igrac udaljen za 3 od 0 onda dobije 7 itd, treba jos videti
+            int distanceFromZero = Math.Abs(sum);
+            int roundScore = 10 - distanceFromZero;
+            if (roundScore < 0) roundScore = 0;
+
+            TotalScore += roundScore;
         }
 
         #endregion
