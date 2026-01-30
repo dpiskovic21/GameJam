@@ -179,6 +179,21 @@ namespace WinFormsApp1.Game
             return true;
         }
 
+        public static bool MoveAltarToHand(Card card) //Todo zamjeni dynamic s klasom
+        {
+            //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
+            //ili se sam prikze genericki tekst da nemre to npraviti
+            if (AvailableEnergy <= 0)
+                return false;
+            if (Hand.Count >= MaxHandSize)
+                return false;
+            if (!Altar.Contains(card))
+                return false; // ak se slucajne neke sjebe na fronte
+            Altar.Remove(card);
+            Hand.Add(card);
+            return true;
+        }
+
         public static bool DiscardFromAltar(Card card) //Todo zamjeni dynamic s klasom
         {
             //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre

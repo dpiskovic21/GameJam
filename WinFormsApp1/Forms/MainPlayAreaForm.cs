@@ -120,12 +120,16 @@ namespace WinFormsApp1.Forms
             contextMenu = new ContextMenuStrip();
 
             var optionDiscard = new ToolStripMenuItem("Discard card (1 energy)");
+            var optionMoveToHand = new ToolStripMenuItem("Move to hand (1 energy)");
             var optionReplace = new ToolStripMenuItem("Replace");
             optionDiscard.Enabled = GameState.AvailableEnergy > 0;
+            optionMoveToHand.Enabled = true;
 
             optionDiscard.Click += (s, e) => DiscardAltarCard(card);
+            optionMoveToHand.Click += (s, e) => MoveAltarToHand(card);
             optionReplace.Click += (s, e) => SwapHandAndAltarCards(card);
             contextMenu.Items.AddRange(new ToolStripItem[] { optionDiscard });
+            contextMenu.Items.AddRange(new ToolStripItem[] { optionMoveToHand });
 
             if (this.cardHandBeingReplaced != null)
             {
@@ -155,7 +159,14 @@ namespace WinFormsApp1.Forms
                 UpdateAll();
             }
         }
-
+        private void MoveAltarToHand(Card card)
+        {
+            if (card != null)
+            {
+                GameState.MoveAltarToHand(card);
+                UpdateAll();
+            }
+        }
         private void ReplaceWithAltarCard(Card card)
         {
             if (card == null)
