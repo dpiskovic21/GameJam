@@ -55,7 +55,6 @@
             handCard1.Size = new Size(200, 300);
             handCard1.TabIndex = 0;
             handCard1.UseVisualStyleBackColor = true;
-            handCard1.Click += handCard1_Click;
             // 
             // handCard2
             // 
@@ -64,7 +63,6 @@
             handCard2.Size = new Size(200, 300);
             handCard2.TabIndex = 1;
             handCard2.UseVisualStyleBackColor = true;
-            handCard2.Click += handCard2_Click;
             // 
             // handCard3
             // 
@@ -73,7 +71,6 @@
             handCard3.Size = new Size(200, 300);
             handCard3.TabIndex = 2;
             handCard3.UseVisualStyleBackColor = true;
-            handCard3.Click += handCard3_Click;
             // 
             // handCard4
             // 
@@ -82,7 +79,6 @@
             handCard4.Size = new Size(200, 300);
             handCard4.TabIndex = 3;
             handCard4.UseVisualStyleBackColor = true;
-            handCard4.Click += handCard4_Click;
             // 
             // handCard5
             // 
@@ -91,7 +87,6 @@
             handCard5.Size = new Size(200, 300);
             handCard5.TabIndex = 4;
             handCard5.UseVisualStyleBackColor = true;
-            handCard5.Click += handCard5_Click;
             // 
             // btnDeck
             // 
@@ -128,7 +123,6 @@
             altarCard1.Size = new Size(200, 300);
             altarCard1.TabIndex = 8;
             altarCard1.UseVisualStyleBackColor = true;
-            altarCard1.Click += altarCard1_Click;
             // 
             // altarCard2
             // 
@@ -137,7 +131,6 @@
             altarCard2.Size = new Size(200, 300);
             altarCard2.TabIndex = 9;
             altarCard2.UseVisualStyleBackColor = true;
-            altarCard2.Click += altarCard2_Click;
             // 
             // altarCard3
             // 
@@ -146,7 +139,6 @@
             altarCard3.Size = new Size(200, 300);
             altarCard3.TabIndex = 10;
             altarCard3.UseVisualStyleBackColor = true;
-            altarCard3.Click += altarCard3_Click;
             // 
             // labelDay
             // 
