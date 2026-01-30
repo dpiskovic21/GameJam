@@ -17,41 +17,7 @@ namespace WinFormsApp1.Forms
         public MainPlayAreaForm()
         {
             InitializeComponent();
-            this.InitializeDeck();
-        }
-
-        private void InitializeDeck()
-        {
-            List<Card> initDeck = new List<Card>();
-
-            for (int i = 0; i < 6; i++)
-            {
-                for (int j = -5; j < 6; j++)
-                {
-                    CardTypeEnum cardType = CardTypeEnum.Light;
-                    if (j == 0)
-                    {
-                        continue;
-                    }
-
-                    if (j < 0)
-                    {
-                        cardType = CardTypeEnum.Dark;
-                    }
-
-                    Card card = new Card()
-                    {
-                        Value = j,
-                        CardBackImagePath = "..\\..\\..\\resources\\placeholder.png",
-                        CardTypeEnum = cardType,
-                        CardImage = new Bitmap("..\\..\\..\\resources\\placeholder.png")
-                    };
-
-                    initDeck.Add(card);
-                }
-            }
-
-            Deck.Cards = initDeck;
+            Deck.InitializeDeck();
         }
     }
 }
