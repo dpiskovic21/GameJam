@@ -34,25 +34,12 @@ namespace WinFormsApp1.Forms
             }
 
             UpdateAll();
-            GameState.OnScoreProcessed += HandleScoreProcessed;
         }
 
         public void UpdateAll()
         {
             UpdateHand();
             UpdateUI();
-        }
-
-        private void HandleScoreProcessed(int score)
-        {
-            if (this.InvokeRequired)
-            {
-                this.BeginInvoke(new Action(() => HandleScoreProcessed(score)));
-                return;
-            }
-
-            //labelScore.Text = $"Dobiveni bodovi: {score}";
-            labelScore.Text = $"Ukupno: {GameState.TotalScore}";
         }
 
         public void UpdateHand()
@@ -74,6 +61,7 @@ namespace WinFormsApp1.Forms
             labelDay.Text = "Day " + GameState.Day + " / 7";
             labelCurrentBalance.Text = "Current balance " + GameState.CurrentBalance;
             labelCurrentModifier.Text = "Current round modifier: " + GameState.RoundModifier;
+            labelScore.Text = $"Ukupno: {GameState.TotalScore}";
         }
 
         public void UpdateUI()
