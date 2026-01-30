@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsApp1.enums;
+using WinFormsApp1.models;
 
 namespace WinFormsApp1.Forms
 {
@@ -15,6 +17,7 @@ namespace WinFormsApp1.Forms
         public MainPlayAreaForm()
         {
             InitializeComponent();
+            Deck.InitializeDeck();
         }
     }
 }
