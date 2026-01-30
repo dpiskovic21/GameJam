@@ -91,9 +91,9 @@
             // 
             // btnDeck
             // 
-            btnDeck.Location = new Point(1668, 699);
+            btnDeck.Location = new Point(1640, 650);
             btnDeck.Name = "btnDeck";
-            btnDeck.Size = new Size(157, 199);
+            btnDeck.Size = new Size(200, 300);
             btnDeck.TabIndex = 5;
             btnDeck.UseVisualStyleBackColor = true;
             btnDeck.Click += btnDeck_Click;
@@ -109,14 +109,14 @@
             // labelEnergy
             // 
             labelEnergy.AutoSize = true;
-            labelEnergy.Location = new Point(1668, 650);
+            labelEnergy.Location = new Point(1668, 632);
             labelEnergy.Name = "labelEnergy";
             labelEnergy.Size = new Size(0, 15);
             labelEnergy.TabIndex = 7;
             // 
             // altarCard1
             // 
-            altarCard1.Location = new Point(242, 155);
+            altarCard1.Location = new Point(424, 138);
             altarCard1.Name = "altarCard1";
             altarCard1.Size = new Size(200, 300);
             altarCard1.TabIndex = 8;
@@ -124,7 +124,7 @@
             // 
             // altarCard2
             // 
-            altarCard2.Location = new Point(482, 155);
+            altarCard2.Location = new Point(664, 138);
             altarCard2.Name = "altarCard2";
             altarCard2.Size = new Size(200, 300);
             altarCard2.TabIndex = 9;
@@ -132,7 +132,7 @@
             // 
             // altarCard3
             // 
-            altarCard3.Location = new Point(721, 155);
+            altarCard3.Location = new Point(903, 138);
             altarCard3.Name = "altarCard3";
             altarCard3.Size = new Size(200, 300);
             altarCard3.TabIndex = 10;
@@ -166,11 +166,11 @@
             // 
             // btnCancelSwap
             // 
-            btnCancelSwap.Location = new Point(107, 71);
+            btnCancelSwap.Location = new Point(3, 52);
             btnCancelSwap.Name = "btnCancelSwap";
-            btnCancelSwap.Size = new Size(75, 23);
+            btnCancelSwap.Size = new Size(223, 42);
             btnCancelSwap.TabIndex = 14;
-            btnCancelSwap.Text = "Odustani";
+            btnCancelSwap.Text = "Cancle swap";
             btnCancelSwap.UseVisualStyleBackColor = true;
             btnCancelSwap.Click += btnCancelSwap_Click;
             // 
@@ -178,18 +178,19 @@
             // 
             gpReplacePrompt.Controls.Add(label1);
             gpReplacePrompt.Controls.Add(btnCancelSwap);
-            gpReplacePrompt.Location = new Point(278, 508);
+            gpReplacePrompt.Location = new Point(661, 508);
             gpReplacePrompt.Name = "gpReplacePrompt";
-            gpReplacePrompt.Size = new Size(200, 100);
+            gpReplacePrompt.Size = new Size(232, 100);
             gpReplacePrompt.TabIndex = 15;
             gpReplacePrompt.TabStop = false;
             // 
             // label1
             // 
             label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 15F);
             label1.Location = new Point(3, 19);
             label1.Name = "label1";
-            label1.Size = new Size(136, 15);
+            label1.Size = new Size(226, 28);
             label1.TabIndex = 15;
             label1.Text = "Select an altar card swap";
             // 
@@ -225,6 +226,7 @@
             Name = "MainPlayAreaForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "MainPlayAreaForm";
+            Load += MainPlayAreaForm_Load;
             gpReplacePrompt.ResumeLayout(false);
             gpReplacePrompt.PerformLayout();
             ResumeLayout(false);
