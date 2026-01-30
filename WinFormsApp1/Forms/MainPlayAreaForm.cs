@@ -5,14 +5,10 @@ namespace WinFormsApp1.Forms
 {
     public partial class MainPlayAreaForm : Form
     {
-
-        ContextMenuStrip contextMenuStrip1;
-        ContextMenuStrip contextMenuStrip2;
-        ContextMenuStrip contextMenuStrip3;
-        ContextMenuStrip contextMenuStrip4;
-        ContextMenuStrip contextMenuStrip5;
-
-        Card? cardHandBeingReplaced = null;
+        private Card? cardHandBeingReplaced = null;
+        private Button[] handCards;
+        private Button[] altarCards;
+        private ContextMenuStrip contextMenu;
 
         public MainPlayAreaForm()
         {
@@ -21,13 +17,21 @@ namespace WinFormsApp1.Forms
             GameState.StartNewGame();
 
             btnDeck.Image = GameState.CardBackImage;
+            handCards = new[] { handCard1, handCard2, handCard3, handCard4, handCard5 };
+            altarCards = new[] { altarCard1, altarCard2, altarCard3 };
 
-            UpdateHand();
-            UpdateUI();
+            for (int i = 0; i < handCards.Length; i++)
+            {
+                handCards[i].Click += (s, e) => OnHandCardClick(s as Button);
+            }
 
-            GameState.OnScoreProcessed += GameState_OnScoreProcessed;
+            for (int i = 0; i < altarCards.Length; i++)
+            {
+                altarCards[i].Click += (s, e) => OnAltarCardClick(s as Button);
+            }
+
+            UpdateAll();
         }
-
 
         public void UpdateAll()
         {
@@ -49,15 +53,15 @@ namespace WinFormsApp1.Forms
 
         public void UpdateHand()
         {
-            handCard1.Tag = GameState.Hand.ElementAtOrDefault(0);
-            handCard2.Tag = GameState.Hand.ElementAtOrDefault(1);
-            handCard3.Tag = GameState.Hand.ElementAtOrDefault(2);
-            handCard4.Tag = GameState.Hand.ElementAtOrDefault(3);
-            handCard5.Tag = GameState.Hand.ElementAtOrDefault(4);
+            for (int i = 0; i < handCards.Length; i++)
+            {
+                handCards[i].Tag = GameState.Hand.ElementAtOrDefault(i);
+            }
 
-            altarCard1.Tag = GameState.Altar.ElementAtOrDefault(0);
-            altarCard2.Tag = GameState.Altar.ElementAtOrDefault(1);
-            altarCard3.Tag = GameState.Altar.ElementAtOrDefault(2);
+            for (int i = 0; i < altarCards.Length; i++)
+            {
+                altarCards[i].Tag = GameState.Altar.ElementAtOrDefault(i);
+            }
 
             labelCurrentHandBalance.Text = "Current hand balance: " + GameState.Hand.Select(x => x?.Value ?? 0).Sum().ToString();
             btnDeck.Text = Deck.ShuffledDeck.Count.ToString() + " / 60";
@@ -68,130 +72,76 @@ namespace WinFormsApp1.Forms
 
         public void UpdateUI()
         {
-            handCard1.Image = ((handCard1.Tag) as Card)?.CardImage ?? GameState.CardBackImage;
-            handCard2.Image = ((handCard2.Tag) as Card)?.CardImage ?? GameState.CardBackImage;
-            handCard3.Image = ((handCard3.Tag) as Card)?.CardImage ?? GameState.CardBackImage;
-            handCard4.Image = ((handCard4.Tag) as Card)?.CardImage ?? GameState.CardBackImage;
-            handCard5.Image = ((handCard5.Tag) as Card)?.CardImage ?? GameState.CardBackImage;
+            for (int i = 0; i < handCards.Length; i++)
+            {
+                handCards[i].Image = ((handCards[i].Tag) as Card)?.CardImage ?? GameState.CardBackImage;
+            }
 
-            altarCard1.Image = ((altarCard1.Tag) as Card)?.CardImage ?? GameState.CardBackImage;
-            altarCard2.Image = ((altarCard2.Tag) as Card)?.CardImage ?? GameState.CardBackImage;
-            altarCard3.Image = ((altarCard3.Tag) as Card)?.CardImage ?? GameState.CardBackImage;
+            for (int i = 0; i < altarCards.Length; i++)
+            {
+                altarCards[i].Image = ((altarCards[i].Tag) as Card)?.CardImage ?? GameState.CardBackImage;
+            }
         }
 
-        #region REFACTOR
-        private void handCard1_Click(object sender, EventArgs e)
+        private void OnHandCardClick(Button handCardControl)
         {
-            Card? card = handCard1.Tag as Card;
-
-            contextMenuStrip1 = new ContextMenuStrip();
-
-            var optionMoveToAltar = new ToolStripMenuItem("Move to altar");
-            var optionReplaceWithAltarCard = new ToolStripMenuItem("Replace with altar card");
-
-            optionMoveToAltar.Click += (s, e) =>
+            Card? card = handCardControl.Tag as Card;
+            if (card == null)
             {
-                MoveHandToAltar(card);
-            };
-            optionReplaceWithAltarCard.Click += (s, e) =>
-            {
-                ReplaceWithAltarCard(card);
-            };
+                return;
+            }
 
-            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { optionMoveToAltar, optionReplaceWithAltarCard });
-            contextMenuStrip1.Show(handCard1, new Point(0, handCard1.Height));
+            contextMenu = new ContextMenuStrip();
+
+            var optionMoveToAltar = new ToolStripMenuItem("Move to altar (1 energy)");
+            optionMoveToAltar.Enabled = GameState.AvailableEnergy > 0;
+            var optionReplaceWithAltarCard = new ToolStripMenuItem("Replace with altar card (0 energy)");
+
+            optionMoveToAltar.Click += (s, e) => MoveHandToAltar(card);
+            optionReplaceWithAltarCard.Click += (s, e) => ReplaceWithAltarCard(card);
+
+            contextMenu.Items.AddRange(new ToolStripItem[] { optionMoveToAltar, optionReplaceWithAltarCard });
+            contextMenu.Show(handCardControl, new Point(0, handCardControl.Height));
+
         }
 
-        private void handCard2_Click(object sender, EventArgs e)
+        private void OnAltarCardClick(Button altarCardControl)
         {
-            Card? card = handCard2.Tag as Card;
-
-            contextMenuStrip2 = new ContextMenuStrip();
-
-            var optionMoveToAltar = new ToolStripMenuItem("Move to altar");
-            var optionReplaceWithAltarCard = new ToolStripMenuItem("Replace with altar card");
-
-            optionMoveToAltar.Click += (s, e) =>
+            Card? card = altarCardControl.Tag as Card;
+            if (card == null)
             {
-                MoveHandToAltar(card);
-            };
-            optionReplaceWithAltarCard.Click += (s, e) =>
-            {
-                ReplaceWithAltarCard(card);
-            };
+                return;
+            }
 
-            contextMenuStrip2.Items.AddRange(new ToolStripItem[] { optionMoveToAltar, optionReplaceWithAltarCard });
-            contextMenuStrip2.Show(handCard2, new Point(0, handCard2.Height));
+            contextMenu = new ContextMenuStrip();
+
+            var optionDiscard = new ToolStripMenuItem("Discard card (1 energy)");
+            var optionReplace = new ToolStripMenuItem("Replace");
+            optionDiscard.Enabled = GameState.AvailableEnergy > 0;
+
+            optionDiscard.Click += (s, e) => DiscardAltarCard(card);
+            optionReplace.Click += (s, e) => SwapHandAndAltarCards(card);
+            contextMenu.Items.AddRange(new ToolStripItem[] { optionDiscard });
+
+            if (this.cardHandBeingReplaced != null)
+            {
+                contextMenu.Items.Add(optionReplace);
+            }
+
+            contextMenu.Show(altarCardControl, new Point(0, altarCardControl.Height));
+
         }
 
-        private void handCard3_Click(object sender, EventArgs e)
+        private void SwapHandAndAltarCards(Card card)
         {
-            Card? card = handCard3.Tag as Card;
 
-            contextMenuStrip3 = new ContextMenuStrip();
-
-            var optionMoveToAltar = new ToolStripMenuItem("Move to altar");
-            var optionReplaceWithAltarCard = new ToolStripMenuItem("Replace with altar card");
-
-            optionMoveToAltar.Click += (s, e) =>
+            if (this.cardHandBeingReplaced != null)
             {
-                MoveHandToAltar(card);
-            };
-            optionReplaceWithAltarCard.Click += (s, e) =>
-            {
-                ReplaceWithAltarCard(card);
-            };
-
-            contextMenuStrip3.Items.AddRange(new ToolStripItem[] { optionMoveToAltar, optionReplaceWithAltarCard });
-            contextMenuStrip3.Show(handCard3, new Point(0, handCard3.Height));
-
+                GameState.SwapHandAndAltarCards(this.cardHandBeingReplaced, card);
+                gpReplacePrompt.Hide();
+                UpdateAll();
+            }
         }
-
-        private void handCard4_Click(object sender, EventArgs e)
-        {
-            Card? card = handCard4.Tag as Card;
-
-            contextMenuStrip4 = new ContextMenuStrip();
-
-            var optionMoveToAltar = new ToolStripMenuItem("Move to altar");
-            var optionReplaceWithAltarCard = new ToolStripMenuItem("Replace with altar card");
-
-            optionMoveToAltar.Click += (s, e) =>
-            {
-                MoveHandToAltar(card);
-            };
-            optionReplaceWithAltarCard.Click += (s, e) =>
-            {
-                ReplaceWithAltarCard(card);
-            };
-
-            contextMenuStrip4.Items.AddRange(new ToolStripItem[] { optionMoveToAltar, optionReplaceWithAltarCard });
-            contextMenuStrip4.Show(handCard4, new Point(0, handCard4.Height));
-        }
-
-        private void handCard5_Click(object sender, EventArgs e)
-        {
-            Card? card = handCard5.Tag as Card;
-
-            contextMenuStrip5 = new ContextMenuStrip();
-
-            var optionMoveToAltar = new ToolStripMenuItem("Move to altar");
-            var optionReplaceWithAltarCard = new ToolStripMenuItem("Replace with altar card");
-
-            optionMoveToAltar.Click += (s, e) =>
-            {
-                MoveHandToAltar(card);
-            };
-            optionReplaceWithAltarCard.Click += (s, e) =>
-            {
-                ReplaceWithAltarCard(card);
-            };
-
-            contextMenuStrip5.Items.AddRange(new ToolStripItem[] { optionMoveToAltar, optionReplaceWithAltarCard });
-            contextMenuStrip5.Show(handCard5, new Point(0, handCard5.Height));
-        }
-
-        #endregion
 
         private void MoveHandToAltar(Card card)
         {
@@ -212,6 +162,16 @@ namespace WinFormsApp1.Forms
             gpReplacePrompt.Show();
         }
 
+        private void DiscardAltarCard(Card card)
+        {
+            if (card != null)
+            {
+                GameState.DiscardFromAltar(card);
+                UpdateAll();
+            }
+
+        }
+
         private void btnDeck_Click(object sender, EventArgs e)
         {
             GameState.DrawCards(1);
@@ -221,76 +181,11 @@ namespace WinFormsApp1.Forms
         private void btnEndRound_Click(object sender, EventArgs e)
         {
             GameState.EndTurn();
+            if (GameState.IsGameOver)
+            {
+                MainForm.SetNewForm(new EndForm());
+            }
             UpdateAll();
-        }
-
-        private void altarCard1_Click(object sender, EventArgs e)
-        {
-            Card? card = (altarCard1.Tag as Card);
-            if (card == null)
-            {
-                return;
-            }
-
-
-            if (this.cardHandBeingReplaced != null)
-            {
-                GameState.SwapHandAndAltarCards(this.cardHandBeingReplaced, card);
-                gpReplacePrompt.Hide();
-                UpdateAll();
-            }
-            else
-            {
-                GameState.DiscardFromAltar(card);
-                UpdateAll();
-            }
-
-        }
-
-        private void altarCard2_Click(object sender, EventArgs e)
-        {
-            Card? card = (altarCard2.Tag as Card);
-            if (card == null)
-            {
-                return;
-            }
-
-
-            if (this.cardHandBeingReplaced != null)
-            {
-                GameState.SwapHandAndAltarCards(this.cardHandBeingReplaced, card);
-                gpReplacePrompt.Hide();
-                UpdateAll();
-            }
-            else
-            {
-                GameState.DiscardFromAltar(card);
-                UpdateAll();
-            }
-
-        }
-
-        private void altarCard3_Click(object sender, EventArgs e)
-        {
-            Card? card = (altarCard3.Tag as Card);
-            if (card == null)
-            {
-                return;
-            }
-
-
-            if (this.cardHandBeingReplaced != null)
-            {
-                GameState.SwapHandAndAltarCards(this.cardHandBeingReplaced, card);
-                gpReplacePrompt.Hide();
-                UpdateAll();
-            }
-            else
-            {
-                GameState.DiscardFromAltar(card);
-                UpdateAll();
-            }
-
         }
 
         private void btnCancelSwap_Click(object sender, EventArgs e)

@@ -196,8 +196,6 @@ namespace WinFormsApp1.Game
 
         public static bool SwapHandAndAltarCards(Card handCard, Card altarCard)
         {
-            if (AvailableEnergy <= 0)
-                return false;
             if (!Altar.Contains(altarCard))
                 return false;
             if (!Hand.Contains(handCard))
@@ -207,8 +205,6 @@ namespace WinFormsApp1.Game
 
             Altar[Altar.IndexOf(altarCard)] = handCard;
             Hand[Hand.IndexOf(handCard)] = altarCard;
-
-            AvailableEnergy--;
 
             return true;
         }
