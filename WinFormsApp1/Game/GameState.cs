@@ -194,15 +194,19 @@ namespace WinFormsApp1.Game
             return true;
         }
 
-        public static bool MoveAltarToHand(Card card) //Todo zamjeni dynamic s klasom
+        public static bool SwapHandAndAltarCards(Card handCard, Card altarCard)
         {
             if (AvailableEnergy <= 0)
                 return false;
-            if (!Altar.Contains(card))
+            if (!Altar.Contains(altarCard))
                 return false;
+            if (!Hand.Contains(handCard))
+            {
+                return false;
+            }
 
-            Altar.Remove(card);
-            Hand.Add(card);
+            Altar[Altar.IndexOf(altarCard)] = handCard;
+            Hand[Hand.IndexOf(handCard)] = altarCard;
 
             AvailableEnergy--;
 

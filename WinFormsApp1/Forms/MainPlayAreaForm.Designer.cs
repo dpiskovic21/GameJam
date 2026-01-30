@@ -42,6 +42,10 @@
             labelDay = new Label();
             btnEndRound = new Button();
             labelCurrentBalance = new Label();
+            btnCancelSwap = new Button();
+            gpReplacePrompt = new GroupBox();
+            label1 = new Label();
+            gpReplacePrompt.SuspendLayout();
             SuspendLayout();
             // 
             // handCard1
@@ -124,6 +128,7 @@
             altarCard1.Size = new Size(157, 199);
             altarCard1.TabIndex = 8;
             altarCard1.UseVisualStyleBackColor = true;
+            altarCard1.Click += altarCard1_Click;
             // 
             // altarCard2
             // 
@@ -132,6 +137,7 @@
             altarCard2.Size = new Size(157, 199);
             altarCard2.TabIndex = 9;
             altarCard2.UseVisualStyleBackColor = true;
+            altarCard2.Click += altarCard2_Click;
             // 
             // altarCard3
             // 
@@ -140,6 +146,7 @@
             altarCard3.Size = new Size(157, 199);
             altarCard3.TabIndex = 10;
             altarCard3.UseVisualStyleBackColor = true;
+            altarCard3.Click += altarCard3_Click;
             // 
             // labelDay
             // 
@@ -170,11 +177,41 @@
             labelCurrentBalance.Size = new Size(0, 54);
             labelCurrentBalance.TabIndex = 13;
             // 
+            // btnCancelSwap
+            // 
+            btnCancelSwap.Location = new Point(107, 71);
+            btnCancelSwap.Name = "btnCancelSwap";
+            btnCancelSwap.Size = new Size(75, 23);
+            btnCancelSwap.TabIndex = 14;
+            btnCancelSwap.Text = "Odustani";
+            btnCancelSwap.UseVisualStyleBackColor = true;
+            btnCancelSwap.Click += btnCancelSwap_Click;
+            // 
+            // gpReplacePrompt
+            // 
+            gpReplacePrompt.Controls.Add(label1);
+            gpReplacePrompt.Controls.Add(btnCancelSwap);
+            gpReplacePrompt.Location = new Point(278, 508);
+            gpReplacePrompt.Name = "gpReplacePrompt";
+            gpReplacePrompt.Size = new Size(200, 100);
+            gpReplacePrompt.TabIndex = 15;
+            gpReplacePrompt.TabStop = false;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(3, 19);
+            label1.Name = "label1";
+            label1.Size = new Size(136, 15);
+            label1.TabIndex = 15;
+            label1.Text = "Select an altar card swap";
+            // 
             // MainPlayAreaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1904, 1041);
+            Controls.Add(gpReplacePrompt);
             Controls.Add(labelCurrentBalance);
             Controls.Add(btnEndRound);
             Controls.Add(labelDay);
@@ -192,6 +229,8 @@
             Name = "MainPlayAreaForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "MainPlayAreaForm";
+            gpReplacePrompt.ResumeLayout(false);
+            gpReplacePrompt.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -212,5 +251,8 @@
         private Label labelDay;
         private Button btnEndRound;
         private Label labelCurrentBalance;
+        private Button btnCancelSwap;
+        private GroupBox gpReplacePrompt;
+        private Label label1;
     }
 }
