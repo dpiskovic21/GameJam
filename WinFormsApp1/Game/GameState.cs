@@ -9,6 +9,8 @@ namespace WinFormsApp1.Game
         public const int EnergyAvailableEachTurn = 5;
         public const int MaxAltarSize = 3;
         public const int MaxDays = 7;
+        public const int MaxHandSize = 5;
+        public readonly static Bitmap CardBackImage = new Bitmap("..\\..\\..\\resources\\placeholder.png");
 
         #endregion
 
@@ -16,7 +18,7 @@ namespace WinFormsApp1.Game
 
         public static int Day { get; private set; } = 1;
         public static int TotalScore { get; private set; } = 0;
-        public static int CurrentBallance { get; private set; } = 0;
+        public static int CurrentBalance { get; private set; } = 0;
         public static bool IsGameOver { get; private set; } = false;
 
         #endregion
@@ -54,14 +56,15 @@ namespace WinFormsApp1.Game
                 int scoreToDisplay = 0;
                 bool hasScore = false;
 
-                lock(_syncLock)
+                lock (_syncLock)
                 {
                     while (_scoreMessageQueue.Count == 0 && _keepRunning)
                     {
                         Monitor.Wait(_syncLock);
                     }
 
-                    if (!_keepRunning) break;
+                    if (!_keepRunning)
+                        break;
 
                     scoreToDisplay = _scoreMessageQueue.Dequeue();
                     hasScore = true;
@@ -77,7 +80,7 @@ namespace WinFormsApp1.Game
 
         public static void StopThreading()
         {
-            lock(_syncLock)
+            lock (_syncLock)
             {
                 _keepRunning = false;
                 Monitor.PulseAll(_syncLock);
@@ -93,7 +96,7 @@ namespace WinFormsApp1.Game
         {
             Day = 1;
             TotalScore = 0;
-            CurrentBallance = 0;
+            CurrentBalance = 0;
             IsGameOver = false;
 
             Hand.Clear();
@@ -117,15 +120,25 @@ namespace WinFormsApp1.Game
             }
 
             AvailableEnergy = EnergyAvailableEachTurn;
-            DrawCards(5);
+            DrawCards(5, false);
         }
 
-        public static void DrawCards(int numberOfCardsToDraw)
+        public static void DrawCards(int numberOfCardsToDraw, bool costsEnergy = true)
         {
+            if (AvailableEnergy == 0)
+            {
+                return;
+            }
             if (Deck.ShuffledDeck.Count < numberOfCardsToDraw)
             {
                 //TODO vidjeti kaj napraviti ak nema dosta karti
                 throw new Exception("Not enough cards in the deck.");
+            }
+
+            if (Hand.Count == MaxHandSize)
+            {
+                //neke vratit mozda da buda jasno na UI-u?
+                return;
             }
 
             var newCards = Deck.ShuffledDeck.Take(numberOfCardsToDraw).ToList();
@@ -137,7 +150,11 @@ namespace WinFormsApp1.Game
                 Deck.ShuffledDeck.Remove(card);
             }
 
-            Console.WriteLine("nekaj");
+            if (costsEnergy)
+            {
+                AvailableEnergy--;
+            }
+
         }
 
         #endregion
@@ -148,9 +165,12 @@ namespace WinFormsApp1.Game
         {
             //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
             //ili se sam prikze genericki tekst da nemre to npraviti
-            if (AvailableEnergy <= 0) return false;
-            if (Altar.Count >= MaxAltarSize) return false;
-            if (!Hand.Contains(card)) return false; // ak slucajne neke sjebeme na fronte
+            if (AvailableEnergy <= 0)
+                return false;
+            if (Altar.Count >= MaxAltarSize)
+                return false;
+            if (!Hand.Contains(card))
+                return false; // ak slucajne neke sjebeme na fronte
 
             Hand.Remove(card);
             Altar.Add(card);
@@ -163,8 +183,10 @@ namespace WinFormsApp1.Game
         {
             //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
             //ili se sam prikze genericki tekst da nemre to npraviti
-            if (AvailableEnergy <= 0) return false;
-            if (!Altar.Contains(card)) return false; // ak se slucajne neke sjebe na fronte
+            if (AvailableEnergy <= 0)
+                return false;
+            if (!Altar.Contains(card))
+                return false; // ak se slucajne neke sjebe na fronte
 
             Altar.Remove(card);
             AvailableEnergy--;
@@ -174,8 +196,10 @@ namespace WinFormsApp1.Game
 
         public static bool MoveAltarToHand(Card card) //Todo zamjeni dynamic s klasom
         {
-            if (AvailableEnergy <= 0) return false;
-            if (!Altar.Contains(card)) return false;
+            if (AvailableEnergy <= 0)
+                return false;
+            if (!Altar.Contains(card))
+                return false;
 
             Altar.Remove(card);
             Hand.Add(card);
@@ -194,7 +218,7 @@ namespace WinFormsApp1.Game
         {
             int roundScore = CalculateScoreIternal();
 
-            lock(_syncLock)
+            lock (_syncLock)
             {
                 _scoreMessageQueue.Enqueue(roundScore);
                 Monitor.Pulse(_syncLock);
@@ -216,11 +240,12 @@ namespace WinFormsApp1.Game
         private static int CalculateScoreIternal()
         {
             int sum = Hand.Sum(c => c.Value);
-            CurrentBallance = sum;
+            CurrentBalance += sum;
 
             int distanceZero = Math.Abs(sum);
             int roundScore = 10 - distanceZero;
-            if (roundScore < 0) roundScore = 0;
+            if (roundScore < 0)
+                roundScore = 0;
 
             TotalScore += roundScore;
             return roundScore;
