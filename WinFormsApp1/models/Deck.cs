@@ -4,8 +4,8 @@ namespace WinFormsApp1.models
 {
     public static class Deck
     {
-        public readonly static Bitmap CardBackImage = ResizeCardImage("..\\..\\..\\resources\\card-back.jpg", 300, 200);
-        public readonly static Bitmap CardPlaceholderImage = ResizeCardImage("..\\..\\..\\resources\\placeholder.jpg", 300, 200);
+        public readonly static Bitmap CardBackImage = ResizeCardImage("..\\..\\..\\resources\\card-back.jpg", 320, 220);
+        public readonly static Bitmap CardPlaceholderImage = ResizeCardImage("..\\..\\..\\resources\\placeholder.jpg", 320, 220);
 
         public static List<Card> Cards { get; set; } = new List<Card>(60);
         public static List<Card> ShuffledDeck { get; set; } = new List<Card>(60);
@@ -34,7 +34,7 @@ namespace WinFormsApp1.models
 
                     Card card = new Card();
 
-                    card.CardImage = ResizeCardImage($"..\\..\\..\\resources\\{j}.png", 300, 200);
+                    card.CardImage = ResizeCardImage($"..\\..\\..\\resources\\{j}.png", 320, 220);
 
                     card.Value = j;
                     card.CardTypeEnum = cardType;

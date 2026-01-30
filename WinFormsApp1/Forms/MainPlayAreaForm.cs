@@ -10,33 +10,142 @@ namespace WinFormsApp1.Forms
         private Button[] handCards;
         private Button[] altarCards;
         private ContextMenuStrip contextMenu;
+        private bool _initialized = false;
 
-
+        #region NE DIRAJ, OPTIMIZACIJA UCITAVANJA DA SMANJI FLICKERING
         public MainPlayAreaForm()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+            UpdateStyles();
         }
 
-        public void SetupComponents()
+        public async Task SetupComponentsAsync()
         {
-            this.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\arena.png", this.Parent.Height, this.Parent.Width);
+            if (_initialized)
+                return;
+
+            _initialized = true;
+
+            this.SuspendLayout();
+
             pbPeekCard.Hide();
 
-            gbHand.Anchor = AnchorStyles.Bottom;
-            gbHand.Left = (this.Parent.Width - gbHand.Width) / 2;
-            gbHand.Top = this.Parent.Height - gbHand.Height - 10;
+
             flowLayoutPanel1.BorderStyle = BorderStyle.None;
+            flowLayoutPanel2.BorderStyle = BorderStyle.None;
+            flowLayoutPanel1.Anchor = AnchorStyles.Bottom;
+            flowLayoutPanel2.Anchor = AnchorStyles.Top;
 
-            //BUTTON IMAGES:
+            // BUTTONS
             btnDeck.Image = Deck.CardBackImage;
+            btnDeck.Font = new Font(CustomFont.pfc.Families[0], 16);
+            btnEndRound.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnEndRound.Height + 75, btnEndRound.Width + 125);
+            btnEndRound.ForeColor = Color.White;
+            btnEndRound.Font = new Font(CustomFont.pfc.Families[0], 16);
 
-            //FONTS:
+            // FONTS
             labelCurrentHandBalance.Font = new Font(CustomFont.pfc.Families[0], 16);
             labelCurrentBalance.Font = new Font(CustomFont.pfc.Families[0], 16);
-            //LABEL SETUPS:
+
+            //LABELS
             labelCurrentHandBalance.BackColor = Color.Transparent;
+            labelCurrentBalance.BackColor = Color.Transparent;
+            labelScore.BackColor = Color.Transparent;
+            labelEnergy.BackColor = Color.Transparent;
+            labelCurrentModifier.BackColor = Color.Transparent;
+            labelDay.BackColor = Color.Transparent;
+
+            handCards = new[] { handCard1, handCard2, handCard3, handCard4, handCard5 };
+            altarCards = new[] { altarCard1, altarCard2, altarCard3 };
+
+            for (int i = 0; i < handCards.Length; i++)
+            {
+                handCards[i].Click -= HandCard_Click_Wrapper;
+                handCards[i].Click += HandCard_Click_Wrapper;
+            }
+
+            for (int i = 0; i < altarCards.Length; i++)
+            {
+                altarCards[i].Click -= AltarCard_Click_Wrapper;
+                altarCards[i].Click += AltarCard_Click_Wrapper;
+            }
+
+            GameState.StartNewGame();
+
+            int targetW = 0, targetH = 0;
+            if (MainForm.PnlContainer != null)
+            {
+                targetW = MainForm.PnlContainer.ClientSize.Width;
+                targetH = MainForm.PnlContainer.ClientSize.Height;
+            }
+            else if (this.Parent != null)
+            {
+                targetW = this.Parent.ClientSize.Width;
+                targetH = this.Parent.ClientSize.Height;
+            }
+            else if (this.ClientSize.Width > 0 && this.ClientSize.Height > 0)
+            {
+                targetW = this.ClientSize.Width;
+                targetH = this.ClientSize.Height;
+            }
+            else
+            {
+                targetW = Screen.PrimaryScreen.WorkingArea.Width;
+                targetH = Screen.PrimaryScreen.WorkingArea.Height;
+            }
+
+            flowLayoutPanel1.Left = (targetW - flowLayoutPanel1.Width) / 2;
+            flowLayoutPanel1.Top = targetH - flowLayoutPanel1.Height - 20;
+            flowLayoutPanel2.Left = (targetW - flowLayoutPanel2.Width) / 2;
+            flowLayoutPanel2.Top = 200;
+
+
+            var path = Path.Combine("..", "..", "..", "resources", "arena.png");
+
+            Bitmap? resized = null;
+
+            resized = await Task.Run(() => Deck.ResizeCardImage(path, targetH, targetW));
+
+            if (resized != null && !this.IsDisposed)
+            {
+                if (this.IsHandleCreated)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        var old = this.BackgroundImage;
+                        this.BackgroundImage = resized;
+                        old?.Dispose();
+                    }));
+                }
+                else
+                {
+                    this.BackgroundImage = resized;
+                }
+            }
+
+            UpdateAll();
+
+            GameState.OnScoreProcessed -= HandleScoreProcessed;
+
+            this.ResumeLayout(true);
 
         }
+
+        private void HandCard_Click_Wrapper(object? sender, EventArgs e)
+        {
+            if (sender is Button b)
+                OnHandCardClick(b);
+        }
+
+        private void AltarCard_Click_Wrapper(object? sender, EventArgs e)
+        {
+            if (sender is Button b)
+                OnAltarCardClick(b);
+        }
+
+        #endregion
 
         public void UpdateAll()
         {
@@ -52,7 +161,6 @@ namespace WinFormsApp1.Forms
                 return;
             }
 
-            //labelScore.Text = $"Dobiveni bodovi: {score}";
             labelScore.Text = $"Ukupno: {GameState.TotalScore}";
         }
 
@@ -67,8 +175,6 @@ namespace WinFormsApp1.Forms
             {
                 altarCards[i].Tag = GameState.Altar.ElementAtOrDefault(i);
             }
-
-
         }
 
         public void UpdateUI()
@@ -77,7 +183,6 @@ namespace WinFormsApp1.Forms
             {
                 var card = (handCards[i].Tag) as Card;
                 handCards[i].Image = card?.CardImage ?? Deck.CardPlaceholderImage;
-                handCards[i].BackColor = Color.Transparent;
                 if (card != null)
                 {
                     handCards[i].Enabled = !card.IsLocked;
@@ -204,26 +309,12 @@ namespace WinFormsApp1.Forms
             pbPeekCard.Hide();
         }
 
-        private void MainPlayAreaForm_Load(object sender, EventArgs e)
+        private async void MainPlayAreaForm_Load(object sender, EventArgs e)
         {
-            SetupComponents();
-            GameState.StartNewGame();
-
-            handCards = new[] { handCard1, handCard2, handCard3, handCard4, handCard5 };
-            altarCards = new[] { altarCard1, altarCard2, altarCard3 };
-
-            for (int i = 0; i < handCards.Length; i++)
+            if (!_initialized)
             {
-                handCards[i].Click += (s, e) => OnHandCardClick(s as Button);
+                await SetupComponentsAsync();
             }
-
-            for (int i = 0; i < altarCards.Length; i++)
-            {
-                altarCards[i].Click += (s, e) => OnAltarCardClick(s as Button);
-            }
-
-            UpdateAll();
-            GameState.OnScoreProcessed += HandleScoreProcessed;
         }
     }
 }

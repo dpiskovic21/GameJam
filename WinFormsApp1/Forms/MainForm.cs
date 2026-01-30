@@ -8,6 +8,9 @@ namespace WinFormsApp1
         private static Panel _pnlContainer;
         public static MainForm instance;
 
+        // Public accessor for the panel container so child forms can query its size
+        public static Panel? PnlContainer => _pnlContainer;
+
         public MainForm()
         {
             InitializeComponent();
