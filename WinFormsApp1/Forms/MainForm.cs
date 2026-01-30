@@ -6,10 +6,13 @@ namespace WinFormsApp1
     {
         private static Form activeForm = null;
         private static Panel _pnlContainer;
+        private static MainForm instance;
 
         public MainForm()
         {
             InitializeComponent();
+            MainForm.instance = this;
+            MainForm.instance.FormBorderStyle = FormBorderStyle.None;
             MainForm._pnlContainer = pnlContainer;
             MainForm.SetNewForm(new StartMenuForm());
         }
