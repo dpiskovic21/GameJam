@@ -288,12 +288,16 @@ namespace WinFormsApp1.Game
 
         private static int CalculateScoreIternal()
         {
-            CurrentBalance += CurrentHandBalance;
+            int balance = CurrentHandBalance;
+            CurrentBalance += balance;
 
-            int distanceZero = Math.Abs(CurrentHandBalance);
-            int roundScore = 10 - distanceZero;
-            if (roundScore < 0)
-                roundScore = 0;
+            const int MaxRoundScore = 20;
+            const int ScoreMultiplier = 100;
+
+            int roundScore = (MaxRoundScore * ScoreMultiplier) / (1 + Math.Abs(balance));
+
+            if (balance == 0)
+                roundScore += ScoreMultiplier;
 
             TotalScore += roundScore;
             return roundScore;
