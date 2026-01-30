@@ -29,25 +29,40 @@
         private void InitializeComponent()
         {
             btnStart = new Button();
+            btnExit = new Button();
             SuspendLayout();
             // 
             // btnStart
             // 
-            btnStart.Location = new Point(299, 183);
+            btnStart.Location = new Point(342, 244);
+            btnStart.Margin = new Padding(3, 4, 3, 4);
             btnStart.Name = "btnStart";
-            btnStart.Size = new Size(233, 90);
+            btnStart.Size = new Size(266, 120);
             btnStart.TabIndex = 0;
             btnStart.Text = "Start";
             btnStart.UseVisualStyleBackColor = true;
             btnStart.Click += btnStart_Click;
             // 
+            // btnExit
+            // 
+            btnExit.Location = new Point(818, 456);
+            btnExit.Margin = new Padding(3, 4, 3, 4);
+            btnExit.Name = "btnExit";
+            btnExit.Size = new Size(266, 120);
+            btnExit.TabIndex = 1;
+            btnExit.Text = "Exit game";
+            btnExit.UseVisualStyleBackColor = true;
+            btnExit.Click += btnExit_Click;
+            // 
             // StartMenuForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1902, 1033);
+            Controls.Add(btnExit);
             Controls.Add(btnStart);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "StartMenuForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "StartMenuForm";
@@ -58,5 +73,6 @@
         #endregion
 
         private Button btnStart;
+        private Button btnExit;
     }
 }
