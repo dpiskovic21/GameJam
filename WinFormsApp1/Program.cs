@@ -14,7 +14,7 @@ namespace WinFormsApp1
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             CustomFont.InitCustomFont();
-            Application.SetDefaultFont(new Font(CustomFont.pfc.Families[0], 10));
+            Application.SetDefaultFont(CustomFont.GetCustomFontBySize(10));
             Application.SetCompatibleTextRenderingDefault(true);
             Application.Run(new MainForm());
         }

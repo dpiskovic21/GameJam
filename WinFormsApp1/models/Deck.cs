@@ -4,6 +4,7 @@ namespace WinFormsApp1.models
 {
     public static class Deck
     {
+        private static Dictionary<string, Bitmap> _loadedImages = new();
         public readonly static Bitmap CardBackImage = ResizeCardImage("..\\..\\..\\resources\\card-back.jpg", 320, 220);
         public readonly static Bitmap CardPlaceholderImage = ResizeCardImage("..\\..\\..\\resources\\placeholder.jpg", 320, 220);
 
@@ -64,9 +65,15 @@ namespace WinFormsApp1.models
             }
         }
 
+
         public static Bitmap ResizeCardImage(String path, int height, int width)
         {
-            using var original = new Bitmap(path);
+            Bitmap original;
+            if (!_loadedImages.ContainsKey(path))
+            {
+                _loadedImages[path] = new Bitmap(path);
+            }
+            original = _loadedImages[path];
             var resized = new Bitmap(width, height);
 
             using (var g = Graphics.FromImage(resized))

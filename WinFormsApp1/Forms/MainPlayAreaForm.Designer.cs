@@ -111,7 +111,7 @@
             // 
             labelDay.AutoSize = true;
             labelDay.BackColor = Color.Transparent;
-            labelDay.Location = new Point(637, 35);
+            labelDay.Location = new Point(183, 47);
             labelDay.Name = "labelDay";
             labelDay.Size = new Size(0, 15);
             labelDay.TabIndex = 11;
@@ -269,7 +269,6 @@
         private Label labelDay;
         private Button btnEndRound;
         private Label labelCurrentBalance;
-        private Label label1;
         private Label labelScore;
         private PictureBox pbPeekCard;
         private Label labelCurrentModifier;

@@ -63,6 +63,7 @@
             Name = "StartMenuForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "StartMenuForm";
+            Load += StartMenuForm_Load;
             ResumeLayout(false);
         }
 

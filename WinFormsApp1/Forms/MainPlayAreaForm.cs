@@ -1,4 +1,5 @@
 ﻿using WinFormsApp1.Assets;
+using WinFormsApp1.enums;
 using WinFormsApp1.Game;
 using WinFormsApp1.models;
 
@@ -6,10 +7,9 @@ namespace WinFormsApp1.Forms
 {
     public partial class MainPlayAreaForm : Form
     {
-        private Card? cardHandBeingReplaced = null;
-        private Button[] handCards;
-        private Button[] altarCards;
-        private ContextMenuStrip contextMenu;
+        private Button[] handCards = [];
+        private Button[] altarCards = [];
+        private ContextMenuStrip? contextMenu = null;
         private bool _initialized = false;
 
         #region NE DIRAJ, OPTIMIZACIJA UCITAVANJA DA SMANJI FLICKERING
@@ -32,7 +32,6 @@ namespace WinFormsApp1.Forms
 
             pbPeekCard.Hide();
 
-
             flowLayoutPanel1.BorderStyle = BorderStyle.None;
             flowLayoutPanel2.BorderStyle = BorderStyle.None;
             flowLayoutPanel1.Anchor = AnchorStyles.Bottom;
@@ -40,21 +39,30 @@ namespace WinFormsApp1.Forms
 
             // BUTTONS
             btnDeck.Image = Deck.CardBackImage;
-            btnDeck.Font = new Font(CustomFont.pfc.Families[0], 16);
+            btnDeck.Font = CustomFont.GetCustomFontBySize(16);
+            btnDeck.FlatStyle = FlatStyle.Flat;
+            btnDeck.FlatAppearance.BorderColor = Color.FromArgb(128, 128, 128);
+            btnDeck.FlatAppearance.BorderSize = 2;
             btnEndRound.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnEndRound.Height + 75, btnEndRound.Width + 125);
             btnEndRound.ForeColor = Color.White;
-            btnEndRound.Font = new Font(CustomFont.pfc.Families[0], 16);
-
+            btnEndRound.Font = CustomFont.GetCustomFontBySize(16);
             // FONTS
-            labelCurrentHandBalance.Font = new Font(CustomFont.pfc.Families[0], 16);
-            labelCurrentBalance.Font = new Font(CustomFont.pfc.Families[0], 16);
+            labelCurrentHandBalance.Font = CustomFont.GetCustomFontBySize(16);
+            labelCurrentBalance.Font = CustomFont.GetCustomFontBySize(16);
+            labelDay.Font = CustomFont.GetCustomFontBySize(50);
+            labelEnergy.Font = CustomFont.GetCustomFontBySize(16);
+            labelCurrentModifier.Font = CustomFont.GetCustomFontBySize(16);
 
             //LABELS
             labelCurrentHandBalance.BackColor = Color.Transparent;
+            labelCurrentHandBalance.ForeColor = Color.White;
             labelCurrentBalance.BackColor = Color.Transparent;
+            labelCurrentBalance.ForeColor = Color.White;
             labelScore.BackColor = Color.Transparent;
             labelEnergy.BackColor = Color.Transparent;
+            labelEnergy.ForeColor = Color.White;
             labelCurrentModifier.BackColor = Color.Transparent;
+            labelCurrentModifier.ForeColor = Color.White;
             labelDay.BackColor = Color.Transparent;
 
             handCards = new[] { handCard1, handCard2, handCard3, handCard4, handCard5 };
@@ -64,12 +72,18 @@ namespace WinFormsApp1.Forms
             {
                 handCards[i].Click -= HandCard_Click_Wrapper;
                 handCards[i].Click += HandCard_Click_Wrapper;
+                handCards[i].FlatStyle = FlatStyle.Flat;
+                handCards[i].FlatAppearance.BorderColor = Color.FromArgb(128, 128, 128);
+                handCards[i].FlatAppearance.BorderSize = 2;
             }
 
             for (int i = 0; i < altarCards.Length; i++)
             {
                 altarCards[i].Click -= AltarCard_Click_Wrapper;
                 altarCards[i].Click += AltarCard_Click_Wrapper;
+                altarCards[i].FlatStyle = FlatStyle.Flat;
+                altarCards[i].FlatAppearance.BorderColor = Color.FromArgb(128, 128, 128);
+                altarCards[i].FlatAppearance.BorderSize = 2;
             }
 
             GameState.StartNewGame();
@@ -92,8 +106,8 @@ namespace WinFormsApp1.Forms
             }
             else
             {
-                targetW = Screen.PrimaryScreen.WorkingArea.Width;
-                targetH = Screen.PrimaryScreen.WorkingArea.Height;
+                targetW = Screen.PrimaryScreen?.WorkingArea.Width ?? 1920;
+                targetH = Screen.PrimaryScreen?.WorkingArea.Height ?? 1080;
             }
 
             flowLayoutPanel1.Left = (targetW - flowLayoutPanel1.Width) / 2;
@@ -104,26 +118,7 @@ namespace WinFormsApp1.Forms
 
             var path = Path.Combine("..", "..", "..", "resources", "arena.png");
 
-            Bitmap? resized = null;
-
-            resized = await Task.Run(() => Deck.ResizeCardImage(path, targetH, targetW));
-
-            if (resized != null && !this.IsDisposed)
-            {
-                if (this.IsHandleCreated)
-                {
-                    this.Invoke(new Action(() =>
-                    {
-                        var old = this.BackgroundImage;
-                        this.BackgroundImage = resized;
-                        old?.Dispose();
-                    }));
-                }
-                else
-                {
-                    this.BackgroundImage = resized;
-                }
-            }
+            this.BackgroundImage = await Task.Run(() => Deck.ResizeCardImage(path, targetH, targetW));
 
             UpdateAll();
 
@@ -199,7 +194,7 @@ namespace WinFormsApp1.Forms
             labelEnergy.Text = GameState.AvailableEnergy + " Energy Remaining";
             labelDay.Text = "Day " + GameState.Day + " / 7";
             labelCurrentBalance.Text = "Current balance " + GameState.CurrentBalance;
-            labelCurrentModifier.Text = "Current round modifier: " + GameState.RoundModifier;
+            labelCurrentModifier.Text = "Current round modifier: " + GameState.RoundModifier.GetDisplayName();
         }
 
         private void OnHandCardClick(Button handCardControl)
@@ -211,11 +206,16 @@ namespace WinFormsApp1.Forms
             }
 
             contextMenu = new ContextMenuStrip();
+            contextMenu.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", contextMenu.Height * 3, contextMenu.Width * 3);
+
+
 
             var optionMoveToAltar = new ToolStripMenuItem("Move to altar (1 energy)");
+            optionMoveToAltar.ForeColor = Color.White;
+            optionMoveToAltar.Font = CustomFont.GetCustomFontBySize(10);
             optionMoveToAltar.Enabled = GameState.AvailableEnergy > 0;
-
             optionMoveToAltar.Click += (s, e) => MoveHandToAltar(card);
+
             contextMenu.Items.AddRange(new ToolStripItem[] { optionMoveToAltar });
 
             contextMenu.Show(handCardControl, new Point(0, handCardControl.Height));
@@ -233,7 +233,11 @@ namespace WinFormsApp1.Forms
             contextMenu = new ContextMenuStrip();
 
             var optionDiscard = new ToolStripMenuItem("Discard card (1 energy)");
+            optionDiscard.ForeColor = Color.White;
+            optionDiscard.Font = CustomFont.GetCustomFontBySize(10);
             var optionMoveToHand = new ToolStripMenuItem("Move to hand (0 energy)");
+            optionMoveToHand.ForeColor = Color.White;
+            optionMoveToHand.Font = CustomFont.GetCustomFontBySize(10);
             optionDiscard.Enabled = GameState.AvailableEnergy > 0;
             optionMoveToHand.Enabled = true;
 
