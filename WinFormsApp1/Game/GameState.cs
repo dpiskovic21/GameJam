@@ -156,6 +156,16 @@ namespace WinFormsApp1.Game
             RoundModifier = (RoundModifierEnum)values.GetValue(random.Next(values.Length));
         }
 
+        public static Card? PeekFirstCard()
+        {
+            if (RoundModifier != RoundModifierEnum.PeekFirstCard)
+            {
+                return null;
+            }
+
+            return Deck.ShuffledDeck.FirstOrDefault();
+        }
+
         public static void DrawCards(int numberOfCardsToDraw, bool isPlayerDraw = true) //ak je isPlayerDraw false znaci da je to RoundStart draw od 5 karti
         {
             if (AvailableEnergy == 0)

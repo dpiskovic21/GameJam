@@ -11,10 +11,11 @@ namespace WinFormsApp1.Forms
         private Button[] altarCards;
         private ContextMenuStrip contextMenu;
 
+
         public MainPlayAreaForm()
         {
             InitializeComponent();
-
+            pbPeekCard.Hide();
             gpReplacePrompt.Hide();
             GameState.StartNewGame();
 
@@ -193,6 +194,23 @@ namespace WinFormsApp1.Forms
             this.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\arena.jpg", this.Parent.Height, this.Parent.Width);
             labelCurrentHandBalance.Font = new Font(CustomFont.pfc.Families[0], 16);
             btnCancelSwap.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnCancelSwap.Height, btnCancelSwap.Width);
+        }
+
+        private void btnDeck_MouseEnter(object sender, EventArgs e)
+        {
+            var card = GameState.PeekFirstCard();
+            if (card == null)
+            {
+                return;
+            }
+
+            pbPeekCard.Image = card.CardImage;
+            pbPeekCard.Show();
+        }
+
+        private void btnDeck_MouseLeave(object sender, EventArgs e)
+        {
+            pbPeekCard.Hide();
         }
     }
 }

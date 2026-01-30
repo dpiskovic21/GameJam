@@ -2,10 +2,10 @@
 {
     public enum RoundModifierEnum
     {
-        LightDoubleValue,
-        DarkDoubleValue,
-        EnergyDebuff,
-        LockedHandCard,
+        LightDoubleValue, //DONE
+        DarkDoubleValue, //DONE
+        EnergyDebuff, //DONE
+        LockedHandCard, //DONE
         PeekFirstCard
     }
 }
