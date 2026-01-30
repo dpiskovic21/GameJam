@@ -1,23 +1,28 @@
-﻿namespace WinFormsApp1.Forms
+﻿using WinFormsApp1.Assets;
+using WinFormsApp1.models;
+
+namespace WinFormsApp1.Forms
 {
     public partial class StartMenuForm : Form
     {
         public StartMenuForm()
         {
             InitializeComponent();
+            this.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\main-menu.jpg", Screen.PrimaryScreen.WorkingArea.Height, Screen.PrimaryScreen.WorkingArea.Width);
+
+            btnStart.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnStart.Height + 75, btnStart.Width + 125);
+            btnExit.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnExit.Height * 2, btnExit.Width * 2);
+            btnStart.ForeColor = Color.White;
+            btnExit.ForeColor = Color.White;
+            btnStart.Font = new Font(CustomFont.pfc.Families[0], 16);
+            btnExit.Font = new Font(CustomFont.pfc.Families[0], 16);
+
+
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
             MainForm.SetNewForm(new LoadingForm());
-        }
-
-        private void StartMenuForm_Load(object sender, EventArgs e)
-        {
-            btnStart.Left = (this.ClientSize.Width - btnStart.Width) / 2;
-            btnStart.Top = (this.ClientSize.Height - btnStart.Height) / 2;
-            btnExit.Left = (this.ClientSize.Width - btnStart.Width) / 2;
-            btnStart.Top = (this.ClientSize.Height - btnStart.Height * 10) / 2;
         }
 
         private void btnExit_Click(object sender, EventArgs e)

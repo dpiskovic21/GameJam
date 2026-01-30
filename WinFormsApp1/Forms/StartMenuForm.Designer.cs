@@ -34,7 +34,7 @@
             // 
             // btnStart
             // 
-            btnStart.Location = new Point(698, 205);
+            btnStart.Location = new Point(851, 633);
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(233, 90);
             btnStart.TabIndex = 0;
@@ -44,7 +44,7 @@
             // 
             // btnExit
             // 
-            btnExit.Location = new Point(682, 453);
+            btnExit.Location = new Point(851, 758);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(233, 90);
             btnExit.TabIndex = 1;
@@ -63,7 +63,6 @@
             Name = "StartMenuForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "StartMenuForm";
-            Load += StartMenuForm_Load;
             ResumeLayout(false);
         }
 

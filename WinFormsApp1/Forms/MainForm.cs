@@ -6,7 +6,7 @@ namespace WinFormsApp1
     {
         private static Form activeForm = null;
         private static Panel _pnlContainer;
-        private static MainForm instance;
+        public static MainForm instance;
 
         public MainForm()
         {

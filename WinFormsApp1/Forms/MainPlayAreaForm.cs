@@ -200,7 +200,7 @@ namespace WinFormsApp1.Forms
 
         private void MainPlayAreaForm_Load(object sender, EventArgs e)
         {
-            this.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\arena.jpeg", this.Height, this.Width);
+            this.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\arena.jpg", this.Parent.Height, this.Parent.Width);
             labelCurrentHandBalance.Font = new Font(CustomFont.pfc.Families[0], 16);
             btnCancelSwap.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnCancelSwap.Height, btnCancelSwap.Width);
         }
