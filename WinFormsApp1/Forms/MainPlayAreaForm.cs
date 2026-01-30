@@ -169,6 +169,10 @@ namespace WinFormsApp1.Forms
         private void btnEndRound_Click(object sender, EventArgs e)
         {
             GameState.EndTurn();
+            if (GameState.IsGameOver)
+            {
+                MainForm.SetNewForm(new EndForm());
+            }
             UpdateAll();
         }
 
