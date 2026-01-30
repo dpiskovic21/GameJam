@@ -120,7 +120,7 @@ namespace WinFormsApp1.Forms
             contextMenu = new ContextMenuStrip();
 
             var optionDiscard = new ToolStripMenuItem("Discard card (1 energy)");
-            var optionMoveToHand = new ToolStripMenuItem("Move to hand (1 energy)");
+            var optionMoveToHand = new ToolStripMenuItem("Move to hand (0 energy)");
             var optionReplace = new ToolStripMenuItem("Replace");
             optionDiscard.Enabled = GameState.AvailableEnergy > 0;
             optionMoveToHand.Enabled = true;
