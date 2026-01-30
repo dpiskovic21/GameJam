@@ -33,6 +33,51 @@ namespace WinFormsApp1.Game
         #region actions
 
         //TODO scoring nakon svakog turna za score;
+        public static void StartNewGame()
+        {
+            Day = 1;
+            TotalScore = 0;
+            CurrentBallance = 0;
+            IsGameOver = false;
+
+            Hand.Clear();
+            Altar.Clear();
+
+            Deck.InitializeDeck();
+            StartTurn();
+        }
+
+        public static void StartTurn()
+        {
+            if (Day > MaxDays)
+            {
+                IsGameOver = true;
+                return;
+            }
+
+            AvailableEnergy = EnergyAvailableEachTurn;
+            DrawCards(5);
+        }
+
+        public static void DrawCards(int numberOfCardsToDraw)
+        {
+            if (Deck.ShuffledDeck.Count < numberOfCardsToDraw)
+            {
+                //TODO vidjeti kaj napraviti ak nema dosta karti
+                throw new Exception("Not enough cards in the deck.");
+            }
+
+            var newCards = Deck.ShuffledDeck.Take(numberOfCardsToDraw).ToList();
+
+            Hand.AddRange(newCards);
+
+            foreach (var card in newCards)
+            {
+                Deck.ShuffledDeck.Remove(card);
+            }
+
+            Console.WriteLine("nekaj");
+        }
 
         public static void PlaceCardOnAltar(dynamic card) //Todo zamjeni dynamic s klasom
         {
@@ -45,11 +90,6 @@ namespace WinFormsApp1.Game
         }
 
         public static void ReplaceHandAndAltarCards(dynamic cardHand, dynamic cardAltar) //Todo zamjeni dynamic s klasom
-        {
-
-        }
-
-        public static void Draw()
         {
 
         }
