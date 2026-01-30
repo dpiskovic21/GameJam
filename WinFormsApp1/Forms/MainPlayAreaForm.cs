@@ -47,7 +47,7 @@ namespace WinFormsApp1.Forms
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action(() => HandleScoreProcessed(score)));
+                this.BeginInvoke(new Action(() => HandleScoreProcessed(score)));
                 return;
             }
 
