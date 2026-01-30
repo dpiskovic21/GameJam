@@ -7,9 +7,14 @@ namespace WinFormsApp1.models
         public static List<Card> Cards { get; set; } = new List<Card>(60);
         public static List<Card> ShuffledDeck { get; set; } = new List<Card>(60);
 
+        public static int CardHeight { get; set; }
+        public static int CardWidth { get; set; }
+
         public static void InitializeDeck()
         {
             List<Card> initDeck = new List<Card>();
+            CardHeight = 199;
+            CardWidth = 157;
 
             for (int i = 0; i < 6; i++)
             {
@@ -26,12 +31,21 @@ namespace WinFormsApp1.models
                         cardType = CardTypeEnum.Dark;
                     }
 
-                    Card card = new Card()
+                    Card card = new Card();
+
+                    if (j == 5)
                     {
-                        Value = j,
-                        CardTypeEnum = cardType,
-                        CardImage = new Bitmap($"..\\..\\..\\resources\\{j}.jpg")
-                    };
+                        card.CardImage = ResizeCardImage("..\\..\\..\\resources\\pulska_arena_svijetla.jpeg", CardHeight, CardWidth);
+                    } else if (j == -5)
+                    {
+                        card.CardImage = ResizeCardImage("..\\..\\..\\resources\\pulska_arena_tamna.jpeg", CardHeight, CardWidth);
+                    } else
+                    {
+                        card.CardImage = new Bitmap($"..\\..\\..\\resources\\{j}.jpg");
+                    }
+
+                    card.Value = j;
+                    card.CardTypeEnum = cardType;
 
                     initDeck.Add(card);
                 }
@@ -56,6 +70,20 @@ namespace WinFormsApp1.models
                 ShuffledDeck.Add(cardsBeforeShuffle[index]);
                 cardsBeforeShuffle.RemoveAt(index);
             }
+        }
+
+        private static Bitmap ResizeCardImage(String path, int height, int width)
+        {
+            using var original = new Bitmap(path);
+            var resized = new Bitmap(width, height);
+
+            using (var g = Graphics.FromImage(resized))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(original, 0, 0, width, height);
+            }
+
+            return resized;
         }
 
     }
