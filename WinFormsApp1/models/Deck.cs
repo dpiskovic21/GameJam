@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.VisualStyles;
-using WinFormsApp1.enums;
+﻿using WinFormsApp1.enums;
 
 namespace WinFormsApp1.models
 {
@@ -36,9 +29,8 @@ namespace WinFormsApp1.models
                     Card card = new Card()
                     {
                         Value = j,
-                        CardBackImagePath = "..\\..\\..\\resources\\placeholder.png",
                         CardTypeEnum = cardType,
-                        CardImage = new Bitmap("..\\..\\..\\resources\\placeholder.png")
+                        CardImage = new Bitmap($"..\\..\\..\\resources\\{j}.jpg")
                     };
 
                     initDeck.Add(card);
@@ -48,8 +40,6 @@ namespace WinFormsApp1.models
             Deck.Cards = initDeck;
             Deck.ShuffleDeck();
             List<Card> shuffledCards = Deck.ShuffledDeck;
-
-            Console.WriteLine("bok");
         }
 
         public static void ShuffleDeck()

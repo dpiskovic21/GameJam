@@ -9,6 +9,7 @@ namespace WinFormsApp1.Game
         public const int EnergyAvailableEachTurn = 5;
         public const int MaxAltarSize = 3;
         public const int MaxDays = 7;
+        public readonly static Bitmap CardBackImage = new Bitmap("..\\..\\..\\resources\\placeholder.png");
 
         #endregion
 
@@ -54,14 +55,15 @@ namespace WinFormsApp1.Game
                 int scoreToDisplay = 0;
                 bool hasScore = false;
 
-                lock(_syncLock)
+                lock (_syncLock)
                 {
                     while (_scoreMessageQueue.Count == 0 && _keepRunning)
                     {
                         Monitor.Wait(_syncLock);
                     }
 
-                    if (!_keepRunning) break;
+                    if (!_keepRunning)
+                        break;
 
                     scoreToDisplay = _scoreMessageQueue.Dequeue();
                     hasScore = true;
@@ -77,7 +79,7 @@ namespace WinFormsApp1.Game
 
         public static void StopThreading()
         {
-            lock(_syncLock)
+            lock (_syncLock)
             {
                 _keepRunning = false;
                 Monitor.PulseAll(_syncLock);
@@ -148,9 +150,12 @@ namespace WinFormsApp1.Game
         {
             //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
             //ili se sam prikze genericki tekst da nemre to npraviti
-            if (AvailableEnergy <= 0) return false;
-            if (Altar.Count >= MaxAltarSize) return false;
-            if (!Hand.Contains(card)) return false; // ak slucajne neke sjebeme na fronte
+            if (AvailableEnergy <= 0)
+                return false;
+            if (Altar.Count >= MaxAltarSize)
+                return false;
+            if (!Hand.Contains(card))
+                return false; // ak slucajne neke sjebeme na fronte
 
             Hand.Remove(card);
             Altar.Add(card);
@@ -163,8 +168,10 @@ namespace WinFormsApp1.Game
         {
             //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
             //ili se sam prikze genericki tekst da nemre to npraviti
-            if (AvailableEnergy <= 0) return false;
-            if (!Altar.Contains(card)) return false; // ak se slucajne neke sjebe na fronte
+            if (AvailableEnergy <= 0)
+                return false;
+            if (!Altar.Contains(card))
+                return false; // ak se slucajne neke sjebe na fronte
 
             Altar.Remove(card);
             AvailableEnergy--;
@@ -174,8 +181,10 @@ namespace WinFormsApp1.Game
 
         public static bool MoveAltarToHand(Card card) //Todo zamjeni dynamic s klasom
         {
-            if (AvailableEnergy <= 0) return false;
-            if (!Altar.Contains(card)) return false;
+            if (AvailableEnergy <= 0)
+                return false;
+            if (!Altar.Contains(card))
+                return false;
 
             Altar.Remove(card);
             Hand.Add(card);
@@ -194,7 +203,7 @@ namespace WinFormsApp1.Game
         {
             int roundScore = CalculateScoreIternal();
 
-            lock(_syncLock)
+            lock (_syncLock)
             {
                 _scoreMessageQueue.Enqueue(roundScore);
                 Monitor.Pulse(_syncLock);
@@ -220,7 +229,8 @@ namespace WinFormsApp1.Game
 
             int distanceZero = Math.Abs(sum);
             int roundScore = 10 - distanceZero;
-            if (roundScore < 0) roundScore = 0;
+            if (roundScore < 0)
+                roundScore = 0;
 
             TotalScore += roundScore;
             return roundScore;
