@@ -31,6 +31,7 @@ namespace WinFormsApp1.Forms
             }
 
             UpdateAll();
+            GameState.OnScoreProcessed += HandleScoreProcessed;
         }
 
         public void UpdateAll()
@@ -39,16 +40,16 @@ namespace WinFormsApp1.Forms
             UpdateUI();
         }
 
-        private void GameState_OnScoreProcessed(int score)
+        private void HandleScoreProcessed(int score)
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action(() => GameState_OnScoreProcessed(score)));
+                this.Invoke(new Action(() => HandleScoreProcessed(score)));
                 return;
             }
 
-            labelCurrentBalance.Text = $"Dobiveni bodovi: {score}";
-            labelCurrentBalance.Text = $"Ukupno: {GameState.TotalScore}";
+            //labelScore.Text = $"Dobiveni bodovi: {score}";
+            labelScore.Text = $"Ukupno: {GameState.TotalScore}";
         }
 
         public void UpdateHand()
@@ -67,7 +68,7 @@ namespace WinFormsApp1.Forms
             btnDeck.Text = Deck.ShuffledDeck.Count.ToString() + " / 60";
             labelEnergy.Text = GameState.AvailableEnergy + " Energy Remaining";
             labelDay.Text = "Day " + GameState.Day + " / 7";
-            //labelCurrentBalance.Text = "Current balance " + GameState.CurrentBalance;
+            labelCurrentBalance.Text = "Current balance " + GameState.CurrentBalance;
         }
 
         public void UpdateUI()
