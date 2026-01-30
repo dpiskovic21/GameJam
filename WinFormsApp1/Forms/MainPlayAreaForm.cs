@@ -206,12 +206,7 @@ namespace WinFormsApp1.Forms
             }
 
             contextMenu = new ContextMenuStrip();
-            contextMenu.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", contextMenu.Height * 3, contextMenu.Width * 3);
-
-
-
             var optionMoveToAltar = new ToolStripMenuItem("Move to altar (1 energy)");
-            optionMoveToAltar.ForeColor = Color.White;
             optionMoveToAltar.Font = CustomFont.GetCustomFontBySize(10);
             optionMoveToAltar.Enabled = GameState.AvailableEnergy > 0;
             optionMoveToAltar.Click += (s, e) => MoveHandToAltar(card);
@@ -233,10 +228,8 @@ namespace WinFormsApp1.Forms
             contextMenu = new ContextMenuStrip();
 
             var optionDiscard = new ToolStripMenuItem("Discard card (1 energy)");
-            optionDiscard.ForeColor = Color.White;
             optionDiscard.Font = CustomFont.GetCustomFontBySize(10);
             var optionMoveToHand = new ToolStripMenuItem("Move to hand (0 energy)");
-            optionMoveToHand.ForeColor = Color.White;
             optionMoveToHand.Font = CustomFont.GetCustomFontBySize(10);
             optionDiscard.Enabled = GameState.AvailableEnergy > 0;
             optionMoveToHand.Enabled = true;
