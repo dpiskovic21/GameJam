@@ -45,6 +45,7 @@
             btnCancelSwap = new Button();
             gpReplacePrompt = new GroupBox();
             label1 = new Label();
+            labelScore = new Label();
             gpReplacePrompt.SuspendLayout();
             SuspendLayout();
             // 
@@ -198,11 +199,20 @@
             label1.TabIndex = 15;
             label1.Text = "Select an altar card swap";
             // 
+            // labelScore
+            // 
+            labelScore.AutoSize = true;
+            labelScore.Location = new Point(1541, 200);
+            labelScore.Name = "labelScore";
+            labelScore.Size = new Size(0, 15);
+            labelScore.TabIndex = 16;
+            // 
             // MainPlayAreaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1904, 1041);
+            Controls.Add(labelScore);
             Controls.Add(gpReplacePrompt);
             Controls.Add(labelCurrentBalance);
             Controls.Add(btnEndRound);
@@ -246,5 +256,6 @@
         private Button btnCancelSwap;
         private GroupBox gpReplacePrompt;
         private Label label1;
+        private Label labelScore;
     }
 }

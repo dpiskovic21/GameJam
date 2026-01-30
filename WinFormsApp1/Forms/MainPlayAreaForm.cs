@@ -31,12 +31,25 @@ namespace WinFormsApp1.Forms
             }
 
             UpdateAll();
+            GameState.OnScoreProcessed += HandleScoreProcessed;
         }
 
         public void UpdateAll()
         {
             UpdateHand();
             UpdateUI();
+        }
+
+        private void HandleScoreProcessed(int score)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() => HandleScoreProcessed(score)));
+                return;
+            }
+
+            //labelScore.Text = $"Dobiveni bodovi: {score}";
+            labelScore.Text = $"Ukupno: {GameState.TotalScore}";
         }
 
         public void UpdateHand()
