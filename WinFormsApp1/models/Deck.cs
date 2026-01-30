@@ -13,8 +13,6 @@ namespace WinFormsApp1.models
         public static void InitializeDeck()
         {
             List<Card> initDeck = new List<Card>();
-            CardHeight = 199;
-            CardWidth = 157;
 
             for (int i = 0; i < 6; i++)
             {
@@ -33,16 +31,7 @@ namespace WinFormsApp1.models
 
                     Card card = new Card();
 
-                    if (j == 5)
-                    {
-                        card.CardImage = ResizeCardImage("..\\..\\..\\resources\\pulska_arena_svijetla.jpeg", CardHeight, CardWidth);
-                    } else if (j == -5)
-                    {
-                        card.CardImage = ResizeCardImage("..\\..\\..\\resources\\pulska_arena_tamna.jpeg", CardHeight, CardWidth);
-                    } else
-                    {
-                        card.CardImage = new Bitmap($"..\\..\\..\\resources\\{j}.jpg");
-                    }
+                    card.CardImage = ResizeCardImage($"..\\..\\..\\resources\\{j}.png", 300, 200);
 
                     card.Value = j;
                     card.CardTypeEnum = cardType;
