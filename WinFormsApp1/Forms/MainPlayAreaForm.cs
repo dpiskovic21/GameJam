@@ -59,6 +59,7 @@ namespace WinFormsApp1.Forms
             labelCurrentBalance.BackColor = Color.Transparent;
             labelCurrentBalance.ForeColor = Color.White;
             labelScore.BackColor = Color.Transparent;
+            labelScore.ForeColor = Color.White;
             labelEnergy.BackColor = Color.Transparent;
             labelEnergy.ForeColor = Color.White;
             labelCurrentModifier.BackColor = Color.Transparent;
@@ -122,8 +123,6 @@ namespace WinFormsApp1.Forms
 
             UpdateAll();
 
-            GameState.OnScoreProcessed -= HandleScoreProcessed;
-
             this.ResumeLayout(true);
 
         }
@@ -146,17 +145,6 @@ namespace WinFormsApp1.Forms
         {
             UpdateHandAndAltarCards();
             UpdateUI();
-        }
-
-        private void HandleScoreProcessed(int score)
-        {
-            if (this.InvokeRequired)
-            {
-                this.BeginInvoke(new Action(() => HandleScoreProcessed(score)));
-                return;
-            }
-
-            labelScore.Text = $"Ukupno: {GameState.TotalScore}";
         }
 
         public void UpdateHandAndAltarCards()
@@ -195,6 +183,7 @@ namespace WinFormsApp1.Forms
             labelDay.Text = "Day " + GameState.Day + " / 7";
             labelCurrentBalance.Text = "Current balance " + GameState.CurrentBalance;
             labelCurrentModifier.Text = "Current round modifier: " + GameState.RoundModifier.GetDisplayName();
+            labelScore.Text = "Ukupno: " + GameState.TotalScore;
         }
 
         private void OnHandCardClick(Button handCardControl)
