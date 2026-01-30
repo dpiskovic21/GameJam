@@ -34,6 +34,11 @@
             handCard4 = new Button();
             handCard5 = new Button();
             btnDeck = new Button();
+            labelCurrentHandBalance = new Label();
+            labelEnergy = new Label();
+            altarCard1 = new Button();
+            altarCard2 = new Button();
+            altarCard3 = new Button();
             SuspendLayout();
             // 
             // handCard1
@@ -78,17 +83,65 @@
             // 
             // btnDeck
             // 
+            btnDeck.Font = new Font("Segoe UI", 20F);
             btnDeck.Location = new Point(1701, 755);
             btnDeck.Name = "btnDeck";
             btnDeck.Size = new Size(157, 199);
             btnDeck.TabIndex = 5;
             btnDeck.UseVisualStyleBackColor = true;
             // 
+            // labelCurrentHandBalance
+            // 
+            labelCurrentHandBalance.AutoSize = true;
+            labelCurrentHandBalance.Font = new Font("Segoe UI", 20F);
+            labelCurrentHandBalance.Location = new Point(43, 847);
+            labelCurrentHandBalance.Name = "labelCurrentHandBalance";
+            labelCurrentHandBalance.Size = new Size(0, 37);
+            labelCurrentHandBalance.TabIndex = 6;
+            // 
+            // labelEnergy
+            // 
+            labelEnergy.AutoSize = true;
+            labelEnergy.Font = new Font("Segoe UI", 20F);
+            labelEnergy.Location = new Point(1701, 708);
+            labelEnergy.Name = "labelEnergy";
+            labelEnergy.Size = new Size(0, 37);
+            labelEnergy.TabIndex = 7;
+            // 
+            // altarCard1
+            // 
+            altarCard1.Location = new Point(335, 241);
+            altarCard1.Name = "altarCard1";
+            altarCard1.Size = new Size(157, 199);
+            altarCard1.TabIndex = 8;
+            altarCard1.UseVisualStyleBackColor = true;
+            // 
+            // altarCard2
+            // 
+            altarCard2.Location = new Point(518, 241);
+            altarCard2.Name = "altarCard2";
+            altarCard2.Size = new Size(157, 199);
+            altarCard2.TabIndex = 9;
+            altarCard2.UseVisualStyleBackColor = true;
+            // 
+            // altarCard3
+            // 
+            altarCard3.Location = new Point(695, 241);
+            altarCard3.Name = "altarCard3";
+            altarCard3.Size = new Size(157, 199);
+            altarCard3.TabIndex = 10;
+            altarCard3.UseVisualStyleBackColor = true;
+            // 
             // MainPlayAreaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1904, 1041);
+            Controls.Add(altarCard3);
+            Controls.Add(altarCard2);
+            Controls.Add(altarCard1);
+            Controls.Add(labelEnergy);
+            Controls.Add(labelCurrentHandBalance);
             Controls.Add(btnDeck);
             Controls.Add(handCard5);
             Controls.Add(handCard4);
@@ -99,6 +152,7 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "MainPlayAreaForm";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -109,5 +163,10 @@
         private Button handCard4;
         private Button handCard5;
         private Button btnDeck;
+        private Label labelCurrentHandBalance;
+        private Label labelEnergy;
+        private Button altarCard1;
+        private Button altarCard2;
+        private Button altarCard3;
     }
 }
