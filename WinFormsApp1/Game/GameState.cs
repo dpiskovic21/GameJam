@@ -288,10 +288,9 @@ namespace WinFormsApp1.Game
 
         private static int CalculateScoreIternal()
         {
-            int sum = Hand.Sum(c => c.Value);
-            CurrentBalance += sum;
+            CurrentBalance += CurrentHandBalance;
 
-            int distanceZero = Math.Abs(sum);
+            int distanceZero = Math.Abs(CurrentHandBalance);
             int roundScore = 10 - distanceZero;
             if (roundScore < 0)
                 roundScore = 0;
