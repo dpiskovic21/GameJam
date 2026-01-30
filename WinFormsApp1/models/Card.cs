@@ -7,5 +7,6 @@ namespace WinFormsApp1.models
         public int Value { get; set; }
         public Bitmap CardImage { get; set; }
         public CardTypeEnum CardTypeEnum { get; set; }
+        public bool IsLocked { get; set; }
     }
 }

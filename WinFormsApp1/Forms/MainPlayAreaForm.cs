@@ -78,7 +78,12 @@ namespace WinFormsApp1.Forms
         {
             for (int i = 0; i < handCards.Length; i++)
             {
-                handCards[i].Image = ((handCards[i].Tag) as Card)?.CardImage ?? Deck.CardPlaceholderImage;
+                var card = ((handCards[i].Tag) as Card);
+                handCards[i].Image = card?.CardImage ?? Deck.CardPlaceholderImage;
+                if (card != null)
+                {
+                    handCards[i].Enabled = !card.IsLocked;
+                }
             }
 
             for (int i = 0; i < altarCards.Length; i++)
@@ -149,7 +154,7 @@ namespace WinFormsApp1.Forms
                 UpdateAll();
             }
         }
-        
+
 
         private void DiscardAltarCard(Card card)
         {
