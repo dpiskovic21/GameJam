@@ -30,6 +30,62 @@ namespace WinFormsApp1.Game
         #endregion
 
 
+        #region Thread and Sync
+        private static Queue<int> _scoreMessageQueue = new Queue<int>();
+        private static readonly object _syncLock = new object();
+
+        private static Thread _scoreThread;
+        private static bool _keepRunning = true;
+
+        public static event Action<int> OnScoreProcessed;
+
+        public static void InitThreading()
+        {
+            _keepRunning = true;
+            _scoreThread = new Thread(ProcessScoreQueue);
+            _scoreThread.IsBackground = true;
+            _scoreThread.Start();
+        }
+
+        private static void ProcessScoreQueue()
+        {
+            while (_keepRunning)
+            {
+                int scoreToDisplay = 0;
+                bool hasScore = false;
+
+                lock(_syncLock)
+                {
+                    while (_scoreMessageQueue.Count == 0 && _keepRunning)
+                    {
+                        Monitor.Wait(_syncLock);
+                    }
+
+                    if (!_keepRunning) break;
+
+                    scoreToDisplay = _scoreMessageQueue.Dequeue();
+                    hasScore = true;
+                }
+
+                if (hasScore)
+                {
+                    OnScoreProcessed?.Invoke(scoreToDisplay);
+                    Thread.Sleep(500);
+                }
+            }
+        }
+
+        public static void StopThreading()
+        {
+            lock(_syncLock)
+            {
+                _keepRunning = false;
+                Monitor.PulseAll(_syncLock);
+            }
+        }
+
+        #endregion
+
         #region Game Control
 
         //TODO scoring nakon svakog turna za score;
@@ -42,6 +98,11 @@ namespace WinFormsApp1.Game
 
             Hand.Clear();
             Altar.Clear();
+
+            if (_scoreThread == null || !_scoreThread.IsAlive)
+            {
+                InitThreading();
+            }
 
             Deck.InitializeDeck();
             StartTurn();
@@ -131,7 +192,13 @@ namespace WinFormsApp1.Game
 
         public static void EndTurn()
         {
-            CalculateScore();
+            int roundScore = CalculateScoreIternal();
+
+            lock(_syncLock)
+            {
+                _scoreMessageQueue.Enqueue(roundScore);
+                Monitor.Pulse(_syncLock);
+            }
 
             Hand.Clear();
             Day++;
@@ -139,29 +206,24 @@ namespace WinFormsApp1.Game
             if (Day > MaxDays)
             {
                 IsGameOver = true;
-            } 
+            }
             else
             {
                 StartTurn();
             }
         }
 
-        private static void CalculateScore()
+        private static int CalculateScoreIternal()
         {
-            int sum = 0;
-            foreach (var card in Hand)
-            {
-                sum += card.Value;
-            }
-
+            int sum = Hand.Sum(c => c.Value);
             CurrentBallance = sum;
 
-            //ak je igrac udaljen za 3 od 0 onda dobije 7 itd, treba jos videti
-            int distanceFromZero = Math.Abs(sum);
-            int roundScore = 10 - distanceFromZero;
+            int distanceZero = Math.Abs(sum);
+            int roundScore = 10 - distanceZero;
             if (roundScore < 0) roundScore = 0;
 
             TotalScore += roundScore;
+            return roundScore;
         }
 
         #endregion
