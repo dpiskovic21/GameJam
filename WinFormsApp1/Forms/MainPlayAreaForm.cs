@@ -18,7 +18,7 @@ namespace WinFormsApp1.Forms
             gpReplacePrompt.Hide();
             GameState.StartNewGame();
 
-            btnDeck.Image = GameState.CardBackImage;
+            btnDeck.Image = Deck.CardBackImage;
             handCards = new[] { handCard1, handCard2, handCard3, handCard4, handCard5 };
             altarCards = new[] { altarCard1, altarCard2, altarCard3 };
 
@@ -78,12 +78,12 @@ namespace WinFormsApp1.Forms
         {
             for (int i = 0; i < handCards.Length; i++)
             {
-                handCards[i].Image = ((handCards[i].Tag) as Card)?.CardImage ?? GameState.CardBackImage;
+                handCards[i].Image = ((handCards[i].Tag) as Card)?.CardImage ?? Deck.CardPlaceholderImage;
             }
 
             for (int i = 0; i < altarCards.Length; i++)
             {
-                altarCards[i].Image = ((altarCards[i].Tag) as Card)?.CardImage ?? GameState.CardBackImage;
+                altarCards[i].Image = ((altarCards[i].Tag) as Card)?.CardImage ?? Deck.CardPlaceholderImage;
             }
         }
 
@@ -207,6 +207,13 @@ namespace WinFormsApp1.Forms
         {
             this.cardHandBeingReplaced = null;
             gpReplacePrompt.Hide();
+        }
+
+        private void MainPlayAreaForm_Load(object sender, EventArgs e)
+        {
+            this.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\arena.jpg", this.Parent.Height, this.Parent.Width);
+            labelCurrentHandBalance.Font = new Font(CustomFont.pfc.Families[0], 16);
+            btnCancelSwap.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnCancelSwap.Height, btnCancelSwap.Width);
         }
     }
 }

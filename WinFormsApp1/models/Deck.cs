@@ -4,6 +4,9 @@ namespace WinFormsApp1.models
 {
     public static class Deck
     {
+        public readonly static Bitmap CardBackImage = ResizeCardImage("..\\..\\..\\resources\\card-back.jpg", 300, 200);
+        public readonly static Bitmap CardPlaceholderImage = ResizeCardImage("..\\..\\..\\resources\\placeholder.jpg", 300, 200);
+
         public static List<Card> Cards { get; set; } = new List<Card>(60);
         public static List<Card> ShuffledDeck { get; set; } = new List<Card>(60);
 
@@ -61,7 +64,7 @@ namespace WinFormsApp1.models
             }
         }
 
-        private static Bitmap ResizeCardImage(String path, int height, int width)
+        public static Bitmap ResizeCardImage(String path, int height, int width)
         {
             using var original = new Bitmap(path);
             var resized = new Bitmap(width, height);

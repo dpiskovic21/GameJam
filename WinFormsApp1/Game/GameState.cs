@@ -10,7 +10,6 @@ namespace WinFormsApp1.Game
         public const int MaxAltarSize = 3;
         public const int MaxDays = 7;
         public const int MaxHandSize = 5;
-        public readonly static Bitmap CardBackImage = new Bitmap("..\\..\\..\\resources\\placeholder.png");
 
         #endregion
 
