@@ -11,10 +11,11 @@ namespace WinFormsApp1.Forms
         private Button[] altarCards;
         private ContextMenuStrip contextMenu;
 
+
         public MainPlayAreaForm()
         {
             InitializeComponent();
-
+            pbPeekCard.Hide();
             gpReplacePrompt.Hide();
             GameState.StartNewGame();
 
@@ -66,19 +67,25 @@ namespace WinFormsApp1.Forms
                 altarCards[i].Tag = GameState.Altar.ElementAtOrDefault(i);
             }
 
-            labelCurrentHandBalance.Text = "Current hand balance: " + GameState.Hand.Select(x => x?.Value ?? 0).Sum().ToString();
+            labelCurrentHandBalance.Text = "Current hand balance: " + GameState.CurrentHandBalance;
             labelCurrentHandBalance.Font = new Font(CustomFont.pfc.Families[0], 10);
             btnDeck.Text = Deck.ShuffledDeck.Count.ToString() + " / 60";
             labelEnergy.Text = GameState.AvailableEnergy + " Energy Remaining";
             labelDay.Text = "Day " + GameState.Day + " / 7";
             labelCurrentBalance.Text = "Current balance " + GameState.CurrentBalance;
+            labelCurrentModifier.Text = "Current round modifier: " + GameState.RoundModifier;
         }
 
         public void UpdateUI()
         {
             for (int i = 0; i < handCards.Length; i++)
             {
-                handCards[i].Image = ((handCards[i].Tag) as Card)?.CardImage ?? Deck.CardPlaceholderImage;
+                var card = ((handCards[i].Tag) as Card);
+                handCards[i].Image = card?.CardImage ?? Deck.CardPlaceholderImage;
+                if (card != null)
+                {
+                    handCards[i].Enabled = !card.IsLocked;
+                }
             }
 
             for (int i = 0; i < altarCards.Length; i++)
@@ -149,7 +156,7 @@ namespace WinFormsApp1.Forms
                 UpdateAll();
             }
         }
-        
+
 
         private void DiscardAltarCard(Card card)
         {
@@ -185,9 +192,26 @@ namespace WinFormsApp1.Forms
 
         private void MainPlayAreaForm_Load(object sender, EventArgs e)
         {
-            this.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\arena.jpg", this.Parent.Height, this.Parent.Width);
+            this.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\arena.png", this.Parent.Height, this.Parent.Width);
             labelCurrentHandBalance.Font = new Font(CustomFont.pfc.Families[0], 16);
             btnCancelSwap.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnCancelSwap.Height, btnCancelSwap.Width);
+        }
+
+        private void btnDeck_MouseEnter(object sender, EventArgs e)
+        {
+            var card = GameState.PeekFirstCard();
+            if (card == null)
+            {
+                return;
+            }
+
+            pbPeekCard.Image = card.CardImage;
+            pbPeekCard.Show();
+        }
+
+        private void btnDeck_MouseLeave(object sender, EventArgs e)
+        {
+            pbPeekCard.Hide();
         }
     }
 }

@@ -46,7 +46,10 @@
             gpReplacePrompt = new GroupBox();
             label1 = new Label();
             labelScore = new Label();
+            pbPeekCard = new PictureBox();
+            labelCurrentModifier = new Label();
             gpReplacePrompt.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPeekCard).BeginInit();
             SuspendLayout();
             // 
             // handCard1
@@ -97,6 +100,8 @@
             btnDeck.TabIndex = 5;
             btnDeck.UseVisualStyleBackColor = true;
             btnDeck.Click += btnDeck_Click;
+            btnDeck.MouseEnter += btnDeck_MouseEnter;
+            btnDeck.MouseLeave += btnDeck_MouseLeave;
             // 
             // labelCurrentHandBalance
             // 
@@ -202,11 +207,29 @@
             labelScore.Size = new Size(0, 15);
             labelScore.TabIndex = 16;
             // 
+            // pbPeekCard
+            // 
+            pbPeekCard.Location = new Point(1640, 319);
+            pbPeekCard.Name = "pbPeekCard";
+            pbPeekCard.Size = new Size(200, 300);
+            pbPeekCard.TabIndex = 17;
+            pbPeekCard.TabStop = false;
+            // 
+            // labelCurrentModifier
+            // 
+            labelCurrentModifier.AutoSize = true;
+            labelCurrentModifier.Location = new Point(22, 914);
+            labelCurrentModifier.Name = "labelCurrentModifier";
+            labelCurrentModifier.Size = new Size(0, 15);
+            labelCurrentModifier.TabIndex = 18;
+            // 
             // MainPlayAreaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1904, 1041);
+            Controls.Add(labelCurrentModifier);
+            Controls.Add(pbPeekCard);
             Controls.Add(labelScore);
             Controls.Add(gpReplacePrompt);
             Controls.Add(labelCurrentBalance);
@@ -229,6 +252,7 @@
             Load += MainPlayAreaForm_Load;
             gpReplacePrompt.ResumeLayout(false);
             gpReplacePrompt.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPeekCard).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -253,5 +277,7 @@
         private GroupBox gpReplacePrompt;
         private Label label1;
         private Label labelScore;
+        private PictureBox pbPeekCard;
+        private Label labelCurrentModifier;
     }
 }

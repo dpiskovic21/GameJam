@@ -1,4 +1,5 @@
-﻿using WinFormsApp1.models;
+﻿using WinFormsApp1.enums;
+using WinFormsApp1.models;
 
 namespace WinFormsApp1.Game
 {
@@ -28,6 +29,27 @@ namespace WinFormsApp1.Game
         public static List<Card> Hand { get; set; } = new List<Card>();
         public static List<Card> Altar { get; set; } = new List<Card>();
         public static int AvailableEnergy { get; set; }
+        public static int CurrentHandBalance
+        {
+            get
+            {
+                return Hand.Select(x =>
+                {
+                    if (x == null)
+                    {
+                        return 0;
+                    }
+
+                    if ((x.CardTypeEnum == CardTypeEnum.Light && RoundModifier == RoundModifierEnum.LightDoubleValue) || (x.CardTypeEnum == CardTypeEnum.Dark && RoundModifier == RoundModifierEnum.DarkDoubleValue))
+                    {
+                        return x.Value * 2;
+                    }
+
+                    return x.Value;
+                }).Sum();
+            }
+        }
+        public static RoundModifierEnum RoundModifier;
         #endregion
 
 
@@ -118,11 +140,33 @@ namespace WinFormsApp1.Game
                 return;
             }
 
+            SetRoundModifier();
             AvailableEnergy = EnergyAvailableEachTurn;
+            if (RoundModifier == RoundModifierEnum.EnergyDebuff)
+            {
+                AvailableEnergy--;
+            }
             DrawCards(5, false);
         }
 
-        public static void DrawCards(int numberOfCardsToDraw, bool costsEnergy = true)
+        private static void SetRoundModifier()
+        {
+            Array values = Enum.GetValues(typeof(RoundModifierEnum));
+            Random random = new Random();
+            RoundModifier = (RoundModifierEnum)values.GetValue(random.Next(values.Length));
+        }
+
+        public static Card? PeekFirstCard()
+        {
+            if (RoundModifier != RoundModifierEnum.PeekFirstCard)
+            {
+                return null;
+            }
+
+            return Deck.ShuffledDeck.FirstOrDefault();
+        }
+
+        public static void DrawCards(int numberOfCardsToDraw, bool isPlayerDraw = true) //ak je isPlayerDraw false znaci da je to RoundStart draw od 5 karti
         {
             if (AvailableEnergy == 0)
             {
@@ -142,6 +186,14 @@ namespace WinFormsApp1.Game
 
             var newCards = Deck.ShuffledDeck.Take(numberOfCardsToDraw).ToList();
 
+            if (!isPlayerDraw && RoundModifier == RoundModifierEnum.LockedHandCard)
+            {
+                Random random = new Random();
+                var randomIndex = random.NextInt64(0, newCards.Count);
+                newCards.ElementAt((int)randomIndex).IsLocked = true;
+            }
+
+
             Hand.AddRange(newCards);
 
             foreach (var card in newCards)
@@ -149,7 +201,7 @@ namespace WinFormsApp1.Game
                 Deck.ShuffledDeck.Remove(card);
             }
 
-            if (costsEnergy)
+            if (isPlayerDraw)
             {
                 AvailableEnergy--;
             }
@@ -236,10 +288,9 @@ namespace WinFormsApp1.Game
 
         private static int CalculateScoreIternal()
         {
-            int sum = Hand.Sum(c => c.Value);
-            CurrentBalance += sum;
+            CurrentBalance += CurrentHandBalance;
 
-            int distanceZero = Math.Abs(sum);
+            int distanceZero = Math.Abs(CurrentHandBalance);
             int roundScore = 10 - distanceZero;
             if (roundScore < 0)
                 roundScore = 0;
