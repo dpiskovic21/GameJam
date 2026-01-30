@@ -73,6 +73,7 @@ namespace WinFormsApp1.Forms
             labelEnergy.Text = GameState.AvailableEnergy + " Energy Remaining";
             labelDay.Text = "Day " + GameState.Day + " / 7";
             labelCurrentBalance.Text = "Current balance " + GameState.CurrentBalance;
+            labelCurrentModifier.Text = "Current round modifier: " + GameState.RoundModifier;
         }
 
         public void UpdateUI()

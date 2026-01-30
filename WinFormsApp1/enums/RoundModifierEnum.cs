@@ -6,6 +6,6 @@
         DarkDoubleValue, //DONE
         EnergyDebuff, //DONE
         LockedHandCard, //DONE
-        PeekFirstCard
+        PeekFirstCard //DONE
     }
 }
