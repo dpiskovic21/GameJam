@@ -122,6 +122,10 @@ namespace WinFormsApp1.Game
 
             SetRoundModifier();
             AvailableEnergy = EnergyAvailableEachTurn;
+            if (RoundModifier == RoundModifierEnum.EnergyDebuff)
+            {
+                AvailableEnergy--;
+            }
             DrawCards(5, false);
         }
 
@@ -129,7 +133,7 @@ namespace WinFormsApp1.Game
         {
             Array values = Enum.GetValues(typeof(RoundModifierEnum));
             Random random = new Random();
-            RoundModifier = RoundModifierEnum.LockedHandCard;//(RoundModifierEnum)values.GetValue(random.Next(values.Length));
+            RoundModifier = RoundModifierEnum.EnergyDebuff;//(RoundModifierEnum)values.GetValue(random.Next(values.Length));
         }
 
         public static void DrawCards(int numberOfCardsToDraw, bool isPlayerDraw = true) //ak je isPlayerDraw false znaci da je to RoundStart draw od 5 karti
