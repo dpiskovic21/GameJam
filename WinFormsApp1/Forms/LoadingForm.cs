@@ -9,9 +9,10 @@
 
         private async void LoadingForm_Load(object sender, EventArgs e)
         {
+            var form = new MainPlayAreaForm();
             await System.Threading.Tasks.Task.Delay(500);
 
-            MainForm.SetNewForm(new MainPlayAreaForm());
+            MainForm.SetNewForm(form);
         }
     }
 }
