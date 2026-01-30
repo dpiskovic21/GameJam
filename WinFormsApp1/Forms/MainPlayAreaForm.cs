@@ -99,10 +99,9 @@ namespace WinFormsApp1.Forms
 
             var optionMoveToAltar = new ToolStripMenuItem("Move to altar (1 energy)");
             optionMoveToAltar.Enabled = GameState.AvailableEnergy > 0;
-            var optionReplaceWithAltarCard = new ToolStripMenuItem("Replace with altar card (0 energy)");
 
             optionMoveToAltar.Click += (s, e) => MoveHandToAltar(card);
-            optionReplaceWithAltarCard.Click += (s, e) => ReplaceWithAltarCard(card);
+            contextMenu.Items.AddRange(new ToolStripItem[] { optionMoveToAltar });
 
             contextMenu.Show(handCardControl, new Point(0, handCardControl.Height));
 
@@ -120,35 +119,19 @@ namespace WinFormsApp1.Forms
 
             var optionDiscard = new ToolStripMenuItem("Discard card (1 energy)");
             var optionMoveToHand = new ToolStripMenuItem("Move to hand (0 energy)");
-            var optionReplace = new ToolStripMenuItem("Replace");
             optionDiscard.Enabled = GameState.AvailableEnergy > 0;
             optionMoveToHand.Enabled = true;
 
             optionDiscard.Click += (s, e) => DiscardAltarCard(card);
             optionMoveToHand.Click += (s, e) => MoveAltarToHand(card);
-            optionReplace.Click += (s, e) => SwapHandAndAltarCards(card);
             contextMenu.Items.AddRange(new ToolStripItem[] { optionDiscard });
             contextMenu.Items.AddRange(new ToolStripItem[] { optionMoveToHand });
 
-            if (this.cardHandBeingReplaced != null)
-            {
-                contextMenu.Items.Add(optionReplace);
-            }
 
             contextMenu.Show(altarCardControl, new Point(0, altarCardControl.Height));
 
         }
 
-        private void SwapHandAndAltarCards(Card card)
-        {
-
-            if (this.cardHandBeingReplaced != null)
-            {
-                GameState.SwapHandAndAltarCards(this.cardHandBeingReplaced, card);
-                gpReplacePrompt.Hide();
-                UpdateAll();
-            }
-        }
 
         private void MoveHandToAltar(Card card)
         {
@@ -166,15 +149,7 @@ namespace WinFormsApp1.Forms
                 UpdateAll();
             }
         }
-        private void ReplaceWithAltarCard(Card card)
-        {
-            if (card == null)
-            {
-                return;
-            }
-            this.cardHandBeingReplaced = card;
-            gpReplacePrompt.Show();
-        }
+        
 
         private void DiscardAltarCard(Card card)
         {

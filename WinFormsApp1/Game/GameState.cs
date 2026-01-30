@@ -181,9 +181,7 @@ namespace WinFormsApp1.Game
         public static bool MoveAltarToHand(Card card) //Todo zamjeni dynamic s klasom
         {
             //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
-            //ili se sam prikze genericki tekst da nemre to npraviti
-            if (AvailableEnergy <= 0)
-                return false;
+            //ili se sam prikze genericki tekst da nemre to npraviti            
             if (Hand.Count >= MaxHandSize)
                 return false;
             if (!Altar.Contains(card))
@@ -204,21 +202,6 @@ namespace WinFormsApp1.Game
 
             Altar.Remove(card);
             AvailableEnergy--;
-
-            return true;
-        }
-
-        public static bool SwapHandAndAltarCards(Card handCard, Card altarCard)
-        {
-            if (!Altar.Contains(altarCard))
-                return false;
-            if (!Hand.Contains(handCard))
-            {
-                return false;
-            }
-
-            Altar[Altar.IndexOf(altarCard)] = handCard;
-            Hand[Hand.IndexOf(handCard)] = altarCard;
 
             return true;
         }
