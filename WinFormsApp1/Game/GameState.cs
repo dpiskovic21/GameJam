@@ -18,7 +18,7 @@ namespace WinFormsApp1.Game
 
         public static int Day { get; private set; } = 1;
         public static int TotalScore { get; private set; } = 0;
-        public static int CurrentBallance { get; private set; } = 0;
+        public static int CurrentBalance { get; private set; } = 0;
         public static bool IsGameOver { get; private set; } = false;
 
         #endregion
@@ -96,7 +96,7 @@ namespace WinFormsApp1.Game
         {
             Day = 1;
             TotalScore = 0;
-            CurrentBallance = 0;
+            CurrentBalance = 0;
             IsGameOver = false;
 
             Hand.Clear();
@@ -240,7 +240,7 @@ namespace WinFormsApp1.Game
         private static int CalculateScoreIternal()
         {
             int sum = Hand.Sum(c => c.Value);
-            CurrentBallance = sum;
+            CurrentBalance += sum;
 
             int distanceZero = Math.Abs(sum);
             int roundScore = 10 - distanceZero;

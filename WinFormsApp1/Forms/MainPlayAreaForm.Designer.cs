@@ -39,6 +39,9 @@
             altarCard1 = new Button();
             altarCard2 = new Button();
             altarCard3 = new Button();
+            labelDay = new Label();
+            btnEndRound = new Button();
+            labelCurrentBalance = new Label();
             SuspendLayout();
             // 
             // handCard1
@@ -89,7 +92,7 @@
             // btnDeck
             // 
             btnDeck.Font = new Font("Segoe UI", 20F);
-            btnDeck.Location = new Point(1701, 755);
+            btnDeck.Location = new Point(1668, 699);
             btnDeck.Name = "btnDeck";
             btnDeck.Size = new Size(157, 199);
             btnDeck.TabIndex = 5;
@@ -109,7 +112,7 @@
             // 
             labelEnergy.AutoSize = true;
             labelEnergy.Font = new Font("Segoe UI", 20F);
-            labelEnergy.Location = new Point(1701, 708);
+            labelEnergy.Location = new Point(1668, 650);
             labelEnergy.Name = "labelEnergy";
             labelEnergy.Size = new Size(0, 37);
             labelEnergy.TabIndex = 7;
@@ -138,11 +141,43 @@
             altarCard3.TabIndex = 10;
             altarCard3.UseVisualStyleBackColor = true;
             // 
+            // labelDay
+            // 
+            labelDay.AutoSize = true;
+            labelDay.Font = new Font("Segoe UI", 50F);
+            labelDay.Location = new Point(637, 35);
+            labelDay.Name = "labelDay";
+            labelDay.Size = new Size(0, 89);
+            labelDay.TabIndex = 11;
+            // 
+            // btnEndRound
+            // 
+            btnEndRound.Font = new Font("Segoe UI", 20F);
+            btnEndRound.Location = new Point(1668, 960);
+            btnEndRound.Name = "btnEndRound";
+            btnEndRound.Size = new Size(157, 43);
+            btnEndRound.TabIndex = 12;
+            btnEndRound.Text = "End  Day";
+            btnEndRound.UseVisualStyleBackColor = true;
+            btnEndRound.Click += btnEndRound_Click;
+            // 
+            // labelCurrentBalance
+            // 
+            labelCurrentBalance.AutoSize = true;
+            labelCurrentBalance.Font = new Font("Segoe UI", 30F);
+            labelCurrentBalance.Location = new Point(1417, 593);
+            labelCurrentBalance.Name = "labelCurrentBalance";
+            labelCurrentBalance.Size = new Size(0, 54);
+            labelCurrentBalance.TabIndex = 13;
+            // 
             // MainPlayAreaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1904, 1041);
+            Controls.Add(labelCurrentBalance);
+            Controls.Add(btnEndRound);
+            Controls.Add(labelDay);
             Controls.Add(altarCard3);
             Controls.Add(altarCard2);
             Controls.Add(altarCard1);
@@ -174,5 +209,8 @@
         private Button altarCard1;
         private Button altarCard2;
         private Button altarCard3;
+        private Label labelDay;
+        private Button btnEndRound;
+        private Label labelCurrentBalance;
     }
 }

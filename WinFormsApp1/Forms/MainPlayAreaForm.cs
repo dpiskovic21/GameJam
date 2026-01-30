@@ -37,6 +37,8 @@ namespace WinFormsApp1.Forms
             labelCurrentHandBalance.Text = "Current hand balance: " + GameState.Hand.Select(x => x?.Value ?? 0).Sum().ToString();
             btnDeck.Text = Deck.ShuffledDeck.Count.ToString() + " / 60";
             labelEnergy.Text = GameState.AvailableEnergy + " Energy Remaining";
+            labelDay.Text = "Day " + GameState.Day + " / 7";
+            labelCurrentBalance.Text = "Current balance " + GameState.CurrentBalance;
         }
 
         public void UpdateUI()
@@ -112,6 +114,12 @@ namespace WinFormsApp1.Forms
         private void btnDeck_Click(object sender, EventArgs e)
         {
             GameState.DrawCards(1);
+            UpdateAll();
+        }
+
+        private void btnEndRound_Click(object sender, EventArgs e)
+        {
+            GameState.EndTurn();
             UpdateAll();
         }
     }
