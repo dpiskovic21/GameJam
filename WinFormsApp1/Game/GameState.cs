@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using WinFormsApp1.Assets;
 using WinFormsApp1.enums;
 using WinFormsApp1.models;
 using WinFormsApp1.service;
@@ -128,7 +129,6 @@ namespace WinFormsApp1.Game
 
             return Deck.ShuffledDeck.FirstOrDefault();
         }
-
         public static void DrawCards(int numberOfCardsToDraw, bool isPlayerDraw = true) //ak je isPlayerDraw false znaci da je to RoundStart draw od 5 karti
         {
             if (AvailableEnergy == 0)
@@ -166,6 +166,7 @@ namespace WinFormsApp1.Game
 
             if (isPlayerDraw)
             {
+                SFX.PlaySfx($"..\\..\\..\\resources\\card_flip.wav",volume: 0.9f);
                 AvailableEnergy--;
             }
 
@@ -174,7 +175,7 @@ namespace WinFormsApp1.Game
         #endregion
 
         #region Player Actions
-
+        
         public static bool MoveHandToAltar(Card card) //Todo zamjeni dynamic s klasom
         {
             //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre

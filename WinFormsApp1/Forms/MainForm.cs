@@ -1,4 +1,5 @@
-﻿using WinFormsApp1.Forms;
+﻿using System.Media;
+using WinFormsApp1.Forms;
 
 namespace WinFormsApp1
 {
@@ -57,6 +58,7 @@ namespace WinFormsApp1
 
         protected override void OnActivated(EventArgs e)
         {
+            SFX.PlayMusicLoop("..\\..\\..\\resources\\ambient.wav", 0.8f);
             base.OnActivated(e);
             if (activeForm != null)
             {

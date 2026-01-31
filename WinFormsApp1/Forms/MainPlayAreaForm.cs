@@ -1,4 +1,5 @@
-﻿using WinFormsApp1.Assets;
+﻿using System.Media;
+using WinFormsApp1.Assets;
 using WinFormsApp1.enums;
 using WinFormsApp1.Game;
 using WinFormsApp1.models;
@@ -297,6 +298,7 @@ namespace WinFormsApp1.Forms
 
         private async void MainPlayAreaForm_Load(object sender, EventArgs e)
         {
+            SFX.StopMusic();
             if (!_initialized)
             {
                 await SetupComponentsAsync();
