@@ -1,4 +1,5 @@
-﻿using WinFormsApp1.Assets;
+﻿using System.Media;
+using WinFormsApp1.Assets;
 using WinFormsApp1.Game;
 using WinFormsApp1.models;
 
@@ -10,6 +11,7 @@ namespace WinFormsApp1.Forms
         private Button[] handCards;
         private Button[] altarCards;
         private ContextMenuStrip contextMenu;
+        private readonly SFX audio = new SFX();
 
         public MainPlayAreaForm()
         {
@@ -185,6 +187,8 @@ namespace WinFormsApp1.Forms
 
         private void MainPlayAreaForm_Load(object sender, EventArgs e)
         {
+            audio.PlayMusicLoop($"..\\..\\..\\resources\\ambient.wav");
+
             this.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\arena.jpg", this.Parent.Height, this.Parent.Width);
             labelCurrentHandBalance.Font = new Font(CustomFont.pfc.Families[0], 16);
             btnCancelSwap.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnCancelSwap.Height, btnCancelSwap.Width);

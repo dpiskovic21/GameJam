@@ -1,4 +1,5 @@
-﻿using WinFormsApp1.Forms;
+﻿using System.Media;
+using WinFormsApp1.Forms;
 
 namespace WinFormsApp1
 {
@@ -15,6 +16,8 @@ namespace WinFormsApp1
             MainForm.instance.FormBorderStyle = FormBorderStyle.None;
             MainForm._pnlContainer = pnlContainer;
             MainForm.SetNewForm(new StartMenuForm());
+            SoundPlayer Mcd = new SoundPlayer($"..\\..\\..\\Resources\\ambient.wav");
+            Mcd.PlayLooping();
         }
 
         public static void SetNewForm(Form childForm)

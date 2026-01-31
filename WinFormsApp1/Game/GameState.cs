@@ -1,4 +1,7 @@
-﻿using WinFormsApp1.models;
+﻿using System.Drawing.Text;
+using System.Media;
+using WinFormsApp1.Assets;
+using WinFormsApp1.models;
 
 namespace WinFormsApp1.Game
 {
@@ -121,7 +124,7 @@ namespace WinFormsApp1.Game
             AvailableEnergy = EnergyAvailableEachTurn;
             DrawCards(5, false);
         }
-
+        private static readonly SFX _audio = new SFX();
         public static void DrawCards(int numberOfCardsToDraw, bool costsEnergy = true)
         {
             if (AvailableEnergy == 0)
@@ -151,6 +154,7 @@ namespace WinFormsApp1.Game
 
             if (costsEnergy)
             {
+                _audio.PlaySfx($"..\\..\\..\\resources\\card_flip.wav",volume: 0.9f);
                 AvailableEnergy--;
             }
 
@@ -159,7 +163,7 @@ namespace WinFormsApp1.Game
         #endregion
 
         #region Player Actions
-
+        
         public static bool MoveHandToAltar(Card card) //Todo zamjeni dynamic s klasom
         {
             //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
