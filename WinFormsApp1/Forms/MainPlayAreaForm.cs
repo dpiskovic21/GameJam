@@ -11,6 +11,7 @@ namespace WinFormsApp1.Forms
         private Button[] altarCards = [];
         private ContextMenuStrip? contextMenu = null;
         private bool _initialized = false;
+        private ToolTip tooltip;
 
         #region NE DIRAJ, OPTIMIZACIJA UCITAVANJA DA SMANJI FLICKERING
         public MainPlayAreaForm()
@@ -29,6 +30,8 @@ namespace WinFormsApp1.Forms
             _initialized = true;
 
             this.SuspendLayout();
+
+            this.tooltip = new ToolTip();
 
             pbPeekCard.Hide();
 
@@ -70,6 +73,8 @@ namespace WinFormsApp1.Forms
             {
                 handCards[i].Click -= HandCard_Click_Wrapper;
                 handCards[i].Click += HandCard_Click_Wrapper;
+                handCards[i].MouseEnter -= Card_MouseEnter;
+                handCards[i].MouseEnter += Card_MouseEnter;
                 handCards[i].FlatStyle = FlatStyle.Flat;
                 handCards[i].FlatAppearance.BorderColor = Color.FromArgb(128, 128, 128);
                 handCards[i].FlatAppearance.BorderSize = 2;
@@ -79,6 +84,8 @@ namespace WinFormsApp1.Forms
             {
                 altarCards[i].Click -= AltarCard_Click_Wrapper;
                 altarCards[i].Click += AltarCard_Click_Wrapper;
+                altarCards[i].MouseEnter -= Card_MouseEnter;
+                altarCards[i].MouseEnter += Card_MouseEnter;
                 altarCards[i].FlatStyle = FlatStyle.Flat;
                 altarCards[i].FlatAppearance.BorderColor = Color.FromArgb(128, 128, 128);
                 altarCards[i].FlatAppearance.BorderSize = 2;
@@ -110,6 +117,25 @@ namespace WinFormsApp1.Forms
             if (sender is Button b)
                 OnHandCardClick(b);
         }
+
+        private void Card_MouseEnter(object? sender, EventArgs e)
+        {
+            if (sender is Button button)
+            {
+                var card = button.Tag as Card;
+                if (card != null)
+                {
+                    var cardValue = card.Value;
+
+                    if ((GameState.RoundModifier == RoundModifierEnum.LightDoubleValue && card.CardTypeEnum == CardTypeEnum.Light) || (GameState.RoundModifier == RoundModifierEnum.DarkDoubleValue && card.CardTypeEnum == CardTypeEnum.Dark))
+                    {
+                        cardValue *= 2;
+                    }
+                    tooltip.Show("Card Value: " + cardValue, button, 0, -25);
+                }
+            }
+        }
+
 
         private void AltarCard_Click_Wrapper(object? sender, EventArgs e)
         {
