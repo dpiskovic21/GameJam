@@ -243,6 +243,7 @@ namespace WinFormsApp1.Game
                 _scoreQueue.CompleteAdding();
                 _isRunning = false;
 
+                Username = "";
                 Hand.Clear();
                 Hand.TrimExcess();
                 Altar.Clear();
