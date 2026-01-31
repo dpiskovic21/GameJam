@@ -42,7 +42,13 @@ namespace WinFormsApp1.Forms
         private async void LoadLeaderboardEntries()
         {
             List<LeaderboardDTO> entries = await GoogleSheetService.getLeaderboardEntries();
-            Console.WriteLine("cool");
+            
+            dgvLeaderboard.DataSource = entries.Select(e => new
+            {
+                Username = e.username,
+                Score = e.score,
+            })
+                .ToList();
         }
     }
 }

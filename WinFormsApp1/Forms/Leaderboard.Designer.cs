@@ -28,13 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Leaderboard";
+            dgvLeaderboard = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dgvLeaderboard).BeginInit();
+            SuspendLayout();
+            // 
+            // dgvLeaderboard
+            // 
+            dgvLeaderboard.AllowUserToAddRows = false;
+            dgvLeaderboard.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvLeaderboard.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvLeaderboard.Location = new Point(413, 119);
+            dgvLeaderboard.Name = "dgvLeaderboard";
+            dgvLeaderboard.ReadOnly = true;
+            dgvLeaderboard.RowHeadersVisible = false;
+            dgvLeaderboard.Size = new Size(892, 667);
+            dgvLeaderboard.TabIndex = 0;
+            // 
+            // Leaderboard
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1904, 1041);
+            Controls.Add(dgvLeaderboard);
+            Name = "Leaderboard";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Leaderboard";
             Load += Leaderboard_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvLeaderboard).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private DataGridView dgvLeaderboard;
     }
 }
