@@ -39,7 +39,7 @@ namespace WinFormsApp1.Forms
 
             // BUTTONS
             btnDeck.Image = Deck.CardBackImage;
-            btnDeck.Font = CustomFont.GetCustomFontBySize(16);
+            btnDeck.Font = CustomFont.GetCustomFontBySize(20);
             btnDeck.FlatStyle = FlatStyle.Flat;
             btnDeck.FlatAppearance.BorderColor = Color.FromArgb(128, 128, 128);
             btnDeck.FlatAppearance.BorderSize = 2;
@@ -47,12 +47,12 @@ namespace WinFormsApp1.Forms
             btnEndRound.ForeColor = Color.White;
             btnEndRound.Font = CustomFont.GetCustomFontBySize(16);
             // FONTS
-            labelCurrentHandBalance.Font = CustomFont.GetCustomFontBySize(16);
-            labelCurrentBalance.Font = CustomFont.GetCustomFontBySize(16);
+            labelCurrentHandBalance.Font = CustomFont.GetCustomFontBySize(18);
+            labelCurrentBalance.Font = CustomFont.GetCustomFontBySize(22);
             labelDay.Font = CustomFont.GetCustomFontBySize(50);
-            labelEnergy.Font = CustomFont.GetCustomFontBySize(16);
-            labelCurrentModifier.Font = CustomFont.GetCustomFontBySize(16);
-            labelScore.Font = CustomFont.GetCustomFontBySize(20);
+            labelEnergy.Font = CustomFont.GetCustomFontBySize(22);
+            labelCurrentModifier.Font = CustomFont.GetCustomFontBySize(18);
+            labelScore.Font = CustomFont.GetCustomFontBySize(22);
 
             //LABELS
             labelCurrentHandBalance.BackColor = Color.Transparent;
