@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             dgvLeaderboard = new DataGridView();
+            btnExit = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvLeaderboard).BeginInit();
             SuspendLayout();
             // 
@@ -44,11 +45,22 @@
             dgvLeaderboard.Size = new Size(920, 600);
             dgvLeaderboard.TabIndex = 0;
             // 
+            // btnExit
+            // 
+            btnExit.Location = new Point(846, 870);
+            btnExit.Name = "btnExit";
+            btnExit.Size = new Size(233, 90);
+            btnExit.TabIndex = 1;
+            btnExit.Text = "Back";
+            btnExit.UseVisualStyleBackColor = true;
+            btnExit.Click += btnExit_Click;
+            // 
             // Leaderboard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1904, 1041);
+            Controls.Add(btnExit);
             Controls.Add(dgvLeaderboard);
             Name = "Leaderboard";
             StartPosition = FormStartPosition.CenterParent;
@@ -61,5 +73,6 @@
         #endregion
 
         private DataGridView dgvLeaderboard;
+        private Button btnExit;
     }
 }

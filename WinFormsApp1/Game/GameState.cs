@@ -65,8 +65,7 @@ namespace WinFormsApp1.Game
         {
             foreach (var score in _scoreQueue.GetConsumingEnumerable())
             {
-                if (Username == null || Username.Length == 0)
-                    continue;
+                if (Username == "") Username = "player";
                 _ = GoogleSheetService.SubmitScore(Username, score);
             }
         }
@@ -247,7 +246,6 @@ namespace WinFormsApp1.Game
                 _scoreQueue.CompleteAdding();
                 _isRunning = false;
 
-                Username = "";
                 Hand.Clear();
                 Hand.TrimExcess();
                 Altar.Clear();
