@@ -17,8 +17,6 @@ namespace WinFormsApp1.Forms
         private void button1_Click(object sender, EventArgs e)
         {
             MainForm.SetNewForm(new StartMenuForm());
-            SFX.StopMusic();
-            SFX.PlayMusicLoop("..\\..\\..\\resources\\ambient.wav", 0.2f);
         }
 
         public async Task SetupFormComponents()
