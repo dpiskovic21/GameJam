@@ -4,9 +4,9 @@ namespace WinFormsApp1
 {
     public partial class MainForm : Form
     {
-        private static Form activeForm = null;
-        private static Panel _pnlContainer;
-        public static MainForm instance;
+        private static Form? activeForm = null;
+        private static Panel? _pnlContainer = null;
+        public static MainForm? instance = null;
 
         public static Panel? PnlContainer => _pnlContainer;
 
@@ -28,7 +28,7 @@ namespace WinFormsApp1
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
 
-            MainForm._pnlContainer.Controls.Add(childForm);
+            MainForm._pnlContainer!.Controls.Add(childForm);
             MainForm._pnlContainer.Tag = childForm;
 
             childForm.Show();
@@ -42,7 +42,7 @@ namespace WinFormsApp1
             if (MainForm.activeForm != null)
             {
                 MainForm.activeForm.Close();
-                MainForm._pnlContainer.Controls.Remove(MainForm.activeForm);
+                MainForm._pnlContainer!.Controls.Remove(MainForm.activeForm);
                 MainForm.activeForm = null;
             }
         }

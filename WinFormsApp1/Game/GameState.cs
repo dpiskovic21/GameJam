@@ -22,7 +22,7 @@ namespace WinFormsApp1.Game
         public static int TotalScore { get; private set; } = 0;
         public static int CurrentBalance { get; private set; } = 0;
         public static bool IsGameOver { get; private set; } = false;
-        public static string Username { get; set; }
+        public static string Username { get; set; } = "Player";
 
         #endregion
 
@@ -57,7 +57,6 @@ namespace WinFormsApp1.Game
 
         #region Threading
 
-        private static readonly object _scoreLock = new object();
         private static BlockingCollection<int> _scoreQueue = new BlockingCollection<int>();
         private static volatile bool _isRunning = false;
 
@@ -65,7 +64,8 @@ namespace WinFormsApp1.Game
         {
             foreach (var score in _scoreQueue.GetConsumingEnumerable())
             {
-                if (Username == "") Username = "player";
+                if (Username == "")
+                    Username = "player";
                 _ = GoogleSheetService.SubmitScore(Username, score);
             }
         }
@@ -74,7 +74,6 @@ namespace WinFormsApp1.Game
 
         #region Game Control
 
-        //TODO scoring nakon svakog turna za score;
         public static void StartNewGame()
         {
             Day = 1;
@@ -146,13 +145,12 @@ namespace WinFormsApp1.Game
             }
             if (Deck.ShuffledDeck.Count < numberOfCardsToDraw)
             {
-                //TODO vidjeti kaj napraviti ak nema dosta karti
-                throw new Exception("Not enough cards in the deck.");
+                IsGameOver = true;
+                EndTurn();
             }
 
             if (Hand.Count == MaxHandSize)
             {
-                //neke vratit mozda da buda jasno na UI-u?
                 return;
             }
 
@@ -185,16 +183,14 @@ namespace WinFormsApp1.Game
 
         #region Player Actions
 
-        public static bool MoveHandToAltar(Card card) //Todo zamjeni dynamic s klasom
+        public static bool MoveHandToAltar(Card card)
         {
-            //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
-            //ili se sam prikze genericki tekst da nemre to npraviti
             if (AvailableEnergy <= 0)
                 return false;
             if (Altar.Count >= MaxAltarSize)
                 return false;
             if (!Hand.Contains(card))
-                return false; // ak slucajne neke sjebeme na fronte
+                return false;
 
             SFX.PlaySfx($"..\\..\\..\\resources\\card_slide.wav", volume: 2f);
             Hand.Remove(card);
@@ -209,14 +205,12 @@ namespace WinFormsApp1.Game
             return true;
         }
 
-        public static bool MoveAltarToHand(Card card) //Todo zamjeni dynamic s klasom
+        public static bool MoveAltarToHand(Card card)
         {
-            //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
-            //ili se sam prikze genericki tekst da nemre to npraviti            
             if (Hand.Count >= MaxHandSize)
                 return false;
             if (!Altar.Contains(card))
-                return false; // ak se slucajne neke sjebe na fronte
+                return false;
 
             SFX.PlaySfx($"..\\..\\..\\resources\\card_slide.wav", volume: 2f);
             Altar.Remove(card);
@@ -224,14 +218,12 @@ namespace WinFormsApp1.Game
             return true;
         }
 
-        public static bool DiscardFromAltar(Card card) //Todo zamjeni dynamic s klasom
+        public static bool DiscardFromAltar(Card card)
         {
-            //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
-            //ili se sam prikze genericki tekst da nemre to npraviti
             if (AvailableEnergy <= 0)
                 return false;
             if (!Altar.Contains(card))
-                return false; // ak se slucajne neke sjebe na fronte
+                return false;
 
             SFX.PlaySfx($"..\\..\\..\\resources\\discard_card.wav", volume: 0.9f);
             Altar.Remove(card);
