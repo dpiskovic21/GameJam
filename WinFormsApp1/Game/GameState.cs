@@ -236,11 +236,7 @@ namespace WinFormsApp1.Game
             if (Day > MaxDays)
             {
                 IsGameOver = true;
-                lock (_scoreLock)
-                {
-                    int finalScore = TotalScore;
-                    _scoreQueue.Add(finalScore);
-                }
+                _scoreQueue.Add(TotalScore);
                 _scoreQueue.CompleteAdding();
                 _isRunning = false;
 
