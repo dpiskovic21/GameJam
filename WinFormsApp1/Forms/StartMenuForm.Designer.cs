@@ -30,6 +30,7 @@
         {
             btnStart = new Button();
             btnExit = new Button();
+            btnLeaderboard = new Button();
             SuspendLayout();
             // 
             // btnStart
@@ -52,17 +53,29 @@
             btnExit.UseVisualStyleBackColor = true;
             btnExit.Click += btnExit_Click;
             // 
+            // btnLeaderboard
+            // 
+            btnLeaderboard.Location = new Point(851, 879);
+            btnLeaderboard.Name = "btnLeaderboard";
+            btnLeaderboard.Size = new Size(233, 90);
+            btnLeaderboard.TabIndex = 2;
+            btnLeaderboard.Text = "Leaderboard";
+            btnLeaderboard.UseVisualStyleBackColor = true;
+            btnLeaderboard.Click += btnLeaderboard_Click;
+            // 
             // StartMenuForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;
             ClientSize = new Size(1904, 1041);
+            Controls.Add(btnLeaderboard);
             Controls.Add(btnExit);
             Controls.Add(btnStart);
             Name = "StartMenuForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "StartMenuForm";
+            Load += StartMenuForm_Load;
             ResumeLayout(false);
         }
 
@@ -70,5 +83,6 @@
 
         private Button btnStart;
         private Button btnExit;
+        private Button btnLeaderboard;
     }
 }

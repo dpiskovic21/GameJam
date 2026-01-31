@@ -28,11 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            handCard1 = new Button();
-            handCard2 = new Button();
-            handCard3 = new Button();
-            handCard4 = new Button();
-            handCard5 = new Button();
             btnDeck = new Button();
             labelCurrentHandBalance = new Label();
             labelEnergy = new Label();
@@ -42,52 +37,20 @@
             labelDay = new Label();
             btnEndRound = new Button();
             labelCurrentBalance = new Label();
-            btnCancelSwap = new Button();
-            gpReplacePrompt = new GroupBox();
-            label1 = new Label();
             labelScore = new Label();
-            gpReplacePrompt.SuspendLayout();
+            pbPeekCard = new PictureBox();
+            labelCurrentModifier = new Label();
+            flowLayoutPanel2 = new FlowLayoutPanel();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            handCard1 = new Button();
+            handCard2 = new Button();
+            handCard3 = new Button();
+            handCard4 = new Button();
+            handCard5 = new Button();
+            ((System.ComponentModel.ISupportInitialize)pbPeekCard).BeginInit();
+            flowLayoutPanel2.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // handCard1
-            // 
-            handCard1.Location = new Point(217, 703);
-            handCard1.Name = "handCard1";
-            handCard1.Size = new Size(200, 300);
-            handCard1.TabIndex = 0;
-            handCard1.UseVisualStyleBackColor = true;
-            // 
-            // handCard2
-            // 
-            handCard2.Location = new Point(447, 703);
-            handCard2.Name = "handCard2";
-            handCard2.Size = new Size(200, 300);
-            handCard2.TabIndex = 1;
-            handCard2.UseVisualStyleBackColor = true;
-            // 
-            // handCard3
-            // 
-            handCard3.Location = new Point(676, 703);
-            handCard3.Name = "handCard3";
-            handCard3.Size = new Size(200, 300);
-            handCard3.TabIndex = 2;
-            handCard3.UseVisualStyleBackColor = true;
-            // 
-            // handCard4
-            // 
-            handCard4.Location = new Point(903, 703);
-            handCard4.Name = "handCard4";
-            handCard4.Size = new Size(200, 300);
-            handCard4.TabIndex = 3;
-            handCard4.UseVisualStyleBackColor = true;
-            // 
-            // handCard5
-            // 
-            handCard5.Location = new Point(1128, 703);
-            handCard5.Name = "handCard5";
-            handCard5.Size = new Size(200, 300);
-            handCard5.TabIndex = 4;
-            handCard5.UseVisualStyleBackColor = true;
             // 
             // btnDeck
             // 
@@ -97,6 +60,8 @@
             btnDeck.TabIndex = 5;
             btnDeck.UseVisualStyleBackColor = true;
             btnDeck.Click += btnDeck_Click;
+            btnDeck.MouseEnter += btnDeck_MouseEnter;
+            btnDeck.MouseLeave += btnDeck_MouseLeave;
             // 
             // labelCurrentHandBalance
             // 
@@ -116,7 +81,8 @@
             // 
             // altarCard1
             // 
-            altarCard1.Location = new Point(424, 138);
+            altarCard1.Dock = DockStyle.Fill;
+            altarCard1.Location = new Point(8, 8);
             altarCard1.Name = "altarCard1";
             altarCard1.Size = new Size(200, 300);
             altarCard1.TabIndex = 8;
@@ -124,7 +90,8 @@
             // 
             // altarCard2
             // 
-            altarCard2.Location = new Point(664, 138);
+            altarCard2.Dock = DockStyle.Fill;
+            altarCard2.Location = new Point(214, 8);
             altarCard2.Name = "altarCard2";
             altarCard2.Size = new Size(200, 300);
             altarCard2.TabIndex = 9;
@@ -132,7 +99,9 @@
             // 
             // altarCard3
             // 
-            altarCard3.Location = new Point(903, 138);
+            altarCard3.AutoSize = true;
+            altarCard3.Dock = DockStyle.Fill;
+            altarCard3.Location = new Point(420, 8);
             altarCard3.Name = "altarCard3";
             altarCard3.Size = new Size(200, 300);
             altarCard3.TabIndex = 10;
@@ -141,7 +110,8 @@
             // labelDay
             // 
             labelDay.AutoSize = true;
-            labelDay.Location = new Point(637, 35);
+            labelDay.BackColor = Color.Transparent;
+            labelDay.Location = new Point(183, 47);
             labelDay.Name = "labelDay";
             labelDay.Size = new Size(0, 15);
             labelDay.TabIndex = 11;
@@ -164,36 +134,6 @@
             labelCurrentBalance.Size = new Size(0, 15);
             labelCurrentBalance.TabIndex = 13;
             // 
-            // btnCancelSwap
-            // 
-            btnCancelSwap.Location = new Point(3, 52);
-            btnCancelSwap.Name = "btnCancelSwap";
-            btnCancelSwap.Size = new Size(223, 42);
-            btnCancelSwap.TabIndex = 14;
-            btnCancelSwap.Text = "Cancle swap";
-            btnCancelSwap.UseVisualStyleBackColor = true;
-            btnCancelSwap.Click += btnCancelSwap_Click;
-            // 
-            // gpReplacePrompt
-            // 
-            gpReplacePrompt.Controls.Add(label1);
-            gpReplacePrompt.Controls.Add(btnCancelSwap);
-            gpReplacePrompt.Location = new Point(661, 508);
-            gpReplacePrompt.Name = "gpReplacePrompt";
-            gpReplacePrompt.Size = new Size(232, 100);
-            gpReplacePrompt.TabIndex = 15;
-            gpReplacePrompt.TabStop = false;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 15F);
-            label1.Location = new Point(3, 19);
-            label1.Name = "label1";
-            label1.Size = new Size(226, 28);
-            label1.TabIndex = 15;
-            label1.Text = "Select an altar card swap";
-            // 
             // labelScore
             // 
             labelScore.AutoSize = true;
@@ -202,33 +142,113 @@
             labelScore.Size = new Size(0, 15);
             labelScore.TabIndex = 16;
             // 
+            // pbPeekCard
+            // 
+            pbPeekCard.Location = new Point(1640, 319);
+            pbPeekCard.Name = "pbPeekCard";
+            pbPeekCard.Size = new Size(200, 300);
+            pbPeekCard.TabIndex = 17;
+            pbPeekCard.TabStop = false;
+            // 
+            // labelCurrentModifier
+            // 
+            labelCurrentModifier.AutoSize = true;
+            labelCurrentModifier.Location = new Point(22, 914);
+            labelCurrentModifier.Name = "labelCurrentModifier";
+            labelCurrentModifier.Size = new Size(0, 15);
+            labelCurrentModifier.TabIndex = 18;
+            // 
+            // flowLayoutPanel2
+            // 
+            flowLayoutPanel2.BackColor = Color.Transparent;
+            flowLayoutPanel2.Controls.Add(altarCard1);
+            flowLayoutPanel2.Controls.Add(altarCard2);
+            flowLayoutPanel2.Controls.Add(altarCard3);
+            flowLayoutPanel2.Location = new Point(172, 179);
+            flowLayoutPanel2.Name = "flowLayoutPanel2";
+            flowLayoutPanel2.Padding = new Padding(5);
+            flowLayoutPanel2.Size = new Size(637, 320);
+            flowLayoutPanel2.TabIndex = 20;
+            flowLayoutPanel2.WrapContents = false;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.AutoSize = true;
+            flowLayoutPanel1.BackColor = Color.Transparent;
+            flowLayoutPanel1.Controls.Add(handCard1);
+            flowLayoutPanel1.Controls.Add(handCard2);
+            flowLayoutPanel1.Controls.Add(handCard3);
+            flowLayoutPanel1.Controls.Add(handCard4);
+            flowLayoutPanel1.Controls.Add(handCard5);
+            flowLayoutPanel1.Location = new Point(12, 684);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(1031, 319);
+            flowLayoutPanel1.TabIndex = 5;
+            // 
+            // handCard1
+            // 
+            handCard1.Location = new Point(3, 3);
+            handCard1.Name = "handCard1";
+            handCard1.Size = new Size(200, 300);
+            handCard1.TabIndex = 0;
+            handCard1.UseVisualStyleBackColor = true;
+            // 
+            // handCard2
+            // 
+            handCard2.Location = new Point(209, 3);
+            handCard2.Name = "handCard2";
+            handCard2.Size = new Size(200, 300);
+            handCard2.TabIndex = 1;
+            handCard2.UseVisualStyleBackColor = true;
+            // 
+            // handCard3
+            // 
+            handCard3.Location = new Point(415, 3);
+            handCard3.Name = "handCard3";
+            handCard3.Size = new Size(200, 300);
+            handCard3.TabIndex = 2;
+            handCard3.UseVisualStyleBackColor = true;
+            // 
+            // handCard4
+            // 
+            handCard4.Location = new Point(621, 3);
+            handCard4.Name = "handCard4";
+            handCard4.Size = new Size(200, 300);
+            handCard4.TabIndex = 3;
+            handCard4.UseVisualStyleBackColor = true;
+            // 
+            // handCard5
+            // 
+            handCard5.Location = new Point(827, 3);
+            handCard5.Name = "handCard5";
+            handCard5.Size = new Size(200, 300);
+            handCard5.TabIndex = 4;
+            handCard5.UseVisualStyleBackColor = true;
+            // 
             // MainPlayAreaForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1904, 1041);
+            Controls.Add(flowLayoutPanel1);
+            Controls.Add(flowLayoutPanel2);
+            Controls.Add(labelCurrentModifier);
+            Controls.Add(pbPeekCard);
             Controls.Add(labelScore);
-            Controls.Add(gpReplacePrompt);
             Controls.Add(labelCurrentBalance);
             Controls.Add(btnEndRound);
             Controls.Add(labelDay);
-            Controls.Add(altarCard3);
-            Controls.Add(altarCard2);
-            Controls.Add(altarCard1);
             Controls.Add(labelEnergy);
             Controls.Add(labelCurrentHandBalance);
             Controls.Add(btnDeck);
-            Controls.Add(handCard5);
-            Controls.Add(handCard4);
-            Controls.Add(handCard3);
-            Controls.Add(handCard2);
-            Controls.Add(handCard1);
             Name = "MainPlayAreaForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "MainPlayAreaForm";
             Load += MainPlayAreaForm_Load;
-            gpReplacePrompt.ResumeLayout(false);
-            gpReplacePrompt.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPeekCard).EndInit();
+            flowLayoutPanel2.ResumeLayout(false);
+            flowLayoutPanel2.PerformLayout();
+            flowLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -249,9 +269,10 @@
         private Label labelDay;
         private Button btnEndRound;
         private Label labelCurrentBalance;
-        private Button btnCancelSwap;
-        private GroupBox gpReplacePrompt;
-        private Label label1;
         private Label labelScore;
+        private PictureBox pbPeekCard;
+        private Label labelCurrentModifier;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private FlowLayoutPanel flowLayoutPanel2;
     }
 }

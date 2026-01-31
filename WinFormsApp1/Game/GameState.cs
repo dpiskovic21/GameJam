@@ -1,7 +1,7 @@
-﻿using System.Drawing.Text;
-using System.Media;
-using WinFormsApp1.Assets;
+﻿using System.Collections.Concurrent;
+using WinFormsApp1.enums;
 using WinFormsApp1.models;
+using WinFormsApp1.service;
 
 namespace WinFormsApp1.Game
 {
@@ -31,61 +31,40 @@ namespace WinFormsApp1.Game
         public static List<Card> Hand { get; set; } = new List<Card>();
         public static List<Card> Altar { get; set; } = new List<Card>();
         public static int AvailableEnergy { get; set; }
-        #endregion
-
-
-        #region Thread and Sync
-        private static Queue<int> _scoreMessageQueue = new Queue<int>();
-        private static readonly object _syncLock = new object();
-
-        private static Thread _scoreThread;
-        private static bool _keepRunning = true;
-
-        public static event Action<int> OnScoreProcessed;
-
-        public static void InitThreading()
+        public static int CurrentHandBalance
         {
-            _keepRunning = true;
-            _scoreThread = new Thread(ProcessScoreQueue);
-            _scoreThread.IsBackground = true;
-            _scoreThread.Start();
-        }
-
-        private static void ProcessScoreQueue()
-        {
-            while (_keepRunning)
+            get
             {
-                int scoreToDisplay = 0;
-                bool hasScore = false;
-
-                lock (_syncLock)
+                return Hand.Select(x =>
                 {
-                    while (_scoreMessageQueue.Count == 0 && _keepRunning)
+                    if (x == null)
                     {
-                        Monitor.Wait(_syncLock);
+                        return 0;
                     }
 
-                    if (!_keepRunning)
-                        break;
+                    if ((x.CardTypeEnum == CardTypeEnum.Light && RoundModifier == RoundModifierEnum.LightDoubleValue) || (x.CardTypeEnum == CardTypeEnum.Dark && RoundModifier == RoundModifierEnum.DarkDoubleValue))
+                    {
+                        return x.Value * 2;
+                    }
 
-                    scoreToDisplay = _scoreMessageQueue.Dequeue();
-                    hasScore = true;
-                }
-
-                if (hasScore)
-                {
-                    OnScoreProcessed?.Invoke(scoreToDisplay);
-                    Thread.Sleep(500);
-                }
+                    return x.Value;
+                }).Sum();
             }
         }
+        public static RoundModifierEnum RoundModifier;
+        #endregion
 
-        public static void StopThreading()
+        #region Threading
+
+        private static readonly object _scoreLock = new object();
+        private static BlockingCollection<int> _scoreQueue = new BlockingCollection<int>();
+        private static volatile bool _isRunning = false;
+
+        private static void ProcessScores()
         {
-            lock (_syncLock)
+            foreach (var score in _scoreQueue.GetConsumingEnumerable())
             {
-                _keepRunning = false;
-                Monitor.PulseAll(_syncLock);
+                _ = GoogleSheetService.SubmitScore("asdf", score);
             }
         }
 
@@ -101,13 +80,16 @@ namespace WinFormsApp1.Game
             CurrentBalance = 0;
             IsGameOver = false;
 
+            if (!_isRunning)
+            {
+                _isRunning = true;
+                _scoreQueue = new BlockingCollection<int>();
+                Thread backgroundWorker = new Thread(ProcessScores) { IsBackground = true };
+                backgroundWorker.Start();
+            }
+
             Hand.Clear();
             Altar.Clear();
-
-            if (_scoreThread == null || !_scoreThread.IsAlive)
-            {
-                InitThreading();
-            }
 
             Deck.InitializeDeck();
             StartTurn();
@@ -121,11 +103,33 @@ namespace WinFormsApp1.Game
                 return;
             }
 
+            SetRoundModifier();
             AvailableEnergy = EnergyAvailableEachTurn;
+            if (RoundModifier == RoundModifierEnum.EnergyDebuff)
+            {
+                AvailableEnergy--;
+            }
             DrawCards(5, false);
         }
-        private static readonly SFX _audio = new SFX();
-        public static void DrawCards(int numberOfCardsToDraw, bool costsEnergy = true)
+
+        private static void SetRoundModifier()
+        {
+            Array values = Enum.GetValues(typeof(RoundModifierEnum));
+            Random random = new Random();
+            RoundModifier = (RoundModifierEnum)values.GetValue(random.Next(values.Length));
+        }
+
+        public static Card? PeekFirstCard()
+        {
+            if (RoundModifier != RoundModifierEnum.PeekFirstCard)
+            {
+                return null;
+            }
+
+            return Deck.ShuffledDeck.FirstOrDefault();
+        }
+
+        public static void DrawCards(int numberOfCardsToDraw, bool isPlayerDraw = true) //ak je isPlayerDraw false znaci da je to RoundStart draw od 5 karti
         {
             if (AvailableEnergy == 0)
             {
@@ -145,6 +149,14 @@ namespace WinFormsApp1.Game
 
             var newCards = Deck.ShuffledDeck.Take(numberOfCardsToDraw).ToList();
 
+            if (!isPlayerDraw && RoundModifier == RoundModifierEnum.LockedHandCard)
+            {
+                Random random = new Random();
+                var randomIndex = random.NextInt64(0, newCards.Count);
+                newCards.ElementAt((int)randomIndex).IsLocked = true;
+            }
+
+
             Hand.AddRange(newCards);
 
             foreach (var card in newCards)
@@ -152,7 +164,7 @@ namespace WinFormsApp1.Game
                 Deck.ShuffledDeck.Remove(card);
             }
 
-            if (costsEnergy)
+            if (isPlayerDraw)
             {
                 _audio.PlaySfx($"..\\..\\..\\resources\\card_flip.wav",volume: 0.9f);
                 AvailableEnergy--;
@@ -219,18 +231,20 @@ namespace WinFormsApp1.Game
         {
             int roundScore = CalculateScoreIternal();
 
-            lock (_syncLock)
-            {
-                _scoreMessageQueue.Enqueue(roundScore);
-                Monitor.Pulse(_syncLock);
-            }
-
             Hand.Clear();
             Day++;
 
             if (Day > MaxDays)
             {
                 IsGameOver = true;
+                _scoreQueue.Add(TotalScore);
+                _scoreQueue.CompleteAdding();
+                _isRunning = false;
+
+                Hand.Clear();
+                Hand.TrimExcess();
+                Altar.Clear();
+                Altar.TrimExcess();
             }
             else
             {
@@ -240,13 +254,16 @@ namespace WinFormsApp1.Game
 
         private static int CalculateScoreIternal()
         {
-            int sum = Hand.Sum(c => c.Value);
-            CurrentBalance += sum;
+            int balance = CurrentHandBalance;
+            CurrentBalance += balance;
 
-            int distanceZero = Math.Abs(sum);
-            int roundScore = 10 - distanceZero;
-            if (roundScore < 0)
-                roundScore = 0;
+            const int MaxRoundScore = 20;
+            const int ScoreMultiplier = 100;
+
+            int roundScore = (MaxRoundScore * ScoreMultiplier) / (1 + Math.Abs(balance));
+
+            if (balance == 0)
+                roundScore += ScoreMultiplier;
 
             TotalScore += roundScore;
             return roundScore;

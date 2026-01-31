@@ -4,8 +4,9 @@ namespace WinFormsApp1.models
 {
     public static class Deck
     {
-        public readonly static Bitmap CardBackImage = ResizeCardImage("..\\..\\..\\resources\\card-back.jpg", 300, 200);
-        public readonly static Bitmap CardPlaceholderImage = ResizeCardImage("..\\..\\..\\resources\\placeholder.jpg", 300, 200);
+        private static Dictionary<string, Bitmap> _loadedImages = new();
+        public readonly static Bitmap CardBackImage = ResizeCardImage("..\\..\\..\\resources\\card-back.jpg", 320, 220);
+        public readonly static Bitmap CardPlaceholderImage = ResizeCardImage("..\\..\\..\\resources\\placeholder.jpg", 320, 220);
 
         public static List<Card> Cards { get; set; } = new List<Card>(60);
         public static List<Card> ShuffledDeck { get; set; } = new List<Card>(60);
@@ -34,7 +35,7 @@ namespace WinFormsApp1.models
 
                     Card card = new Card();
 
-                    card.CardImage = ResizeCardImage($"..\\..\\..\\resources\\{j}.png", 300, 200);
+                    card.CardImage = ResizeCardImage($"..\\..\\..\\resources\\{j}.png", 320, 220);
 
                     card.Value = j;
                     card.CardTypeEnum = cardType;
@@ -64,9 +65,15 @@ namespace WinFormsApp1.models
             }
         }
 
+
         public static Bitmap ResizeCardImage(String path, int height, int width)
         {
-            using var original = new Bitmap(path);
+            Bitmap original;
+            if (!_loadedImages.ContainsKey(path))
+            {
+                _loadedImages[path] = new Bitmap(path);
+            }
+            original = _loadedImages[path];
             var resized = new Bitmap(width, height);
 
             using (var g = Graphics.FromImage(resized))
