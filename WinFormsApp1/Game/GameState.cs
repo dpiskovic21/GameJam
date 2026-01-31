@@ -23,6 +23,7 @@ namespace WinFormsApp1.Game
         public static int TotalScore { get; private set; } = 0;
         public static int CurrentBalance { get; private set; } = 0;
         public static bool IsGameOver { get; private set; } = false;
+        public static string Username { get; set; }
 
         #endregion
 
@@ -65,7 +66,8 @@ namespace WinFormsApp1.Game
         {
             foreach (var score in _scoreQueue.GetConsumingEnumerable())
             {
-                _ = GoogleSheetService.SubmitScore("asdf", score);
+                if (Username == null || Username.Length == 0) continue;
+                _ = GoogleSheetService.SubmitScore(Username, score);
             }
         }
 
