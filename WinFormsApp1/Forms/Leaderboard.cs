@@ -37,6 +37,9 @@ namespace WinFormsApp1.Forms
             }
 
             this.BackgroundImage = darkenedImage;
+
+            btnExit.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnExit.Height * 2, btnExit.Width * 2);
+            btnExit.ForeColor = Color.White;
         }
 
         private async void LoadLeaderboardEntries()
@@ -44,7 +47,7 @@ namespace WinFormsApp1.Forms
             this.StyleDataGridView();
 
             List<LeaderboardDTO> entries = await GoogleSheetService.getLeaderboardEntries();
-            
+
             dgvLeaderboard.DataSource = entries.Select(e => new
             {
                 Username = e.username,
@@ -71,6 +74,12 @@ namespace WinFormsApp1.Forms
             dgvLeaderboard.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 0, 0, 0);
             dgvLeaderboard.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dgvLeaderboard.AllowUserToResizeRows = false;
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            var form = new StartMenuForm();
+            MainForm.SetNewForm(form);
         }
     }
 }
