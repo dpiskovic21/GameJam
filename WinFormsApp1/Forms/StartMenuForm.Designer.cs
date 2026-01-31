@@ -31,7 +31,7 @@
             btnStart = new Button();
             btnExit = new Button();
             btnLeaderboard = new Button();
-            rtxtUsername = new RichTextBox();
+            rtxtUsername = new TextBox();
             SuspendLayout();
             // 
             // btnStart
@@ -66,11 +66,11 @@
             // 
             // rtxtUsername
             // 
-            rtxtUsername.Location = new Point(851, 677);
+            rtxtUsername.Location = new Point(851, 689);
             rtxtUsername.Name = "rtxtUsername";
-            rtxtUsername.Size = new Size(233, 31);
+            rtxtUsername.PlaceholderText = "username";
+            rtxtUsername.Size = new Size(233, 23);
             rtxtUsername.TabIndex = 3;
-            rtxtUsername.Text = "";
             // 
             // StartMenuForm
             // 
@@ -87,6 +87,7 @@
             Text = "StartMenuForm";
             Load += StartMenuForm_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -94,6 +95,6 @@
         private Button btnStart;
         private Button btnExit;
         private Button btnLeaderboard;
-        private RichTextBox rtxtUsername;
+        private TextBox rtxtUsername;
     }
 }

@@ -13,7 +13,7 @@ namespace WinFormsApp1.Forms
             btnStart.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnStart.Height + 75, btnStart.Width + 125);
             btnExit.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnExit.Height * 2, btnExit.Width * 2);
             btnLeaderboard.Image = Deck.ResizeCardImage($"..\\..\\..\\resources\\button.jpg", btnLeaderboard.Height * 2, btnLeaderboard.Width * 2);
-            rtxtUsername.BackColor = Color.DarkSlateGray;
+            rtxtUsername.BackColor = Color.FromArgb(150, 150, 150);
             btnStart.ForeColor = Color.White;
             btnExit.ForeColor = Color.White;
             btnLeaderboard.ForeColor = Color.White;
