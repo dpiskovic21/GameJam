@@ -30,9 +30,7 @@ namespace WinFormsApp1.Forms
             _initialized = true;
 
             this.SuspendLayout();
-
             this.tooltip = new ToolTip();
-
             pbPeekCard.Hide();
 
             flowLayoutPanel1.BorderStyle = BorderStyle.None;
@@ -75,6 +73,8 @@ namespace WinFormsApp1.Forms
                 handCards[i].Click += HandCard_Click_Wrapper;
                 handCards[i].MouseEnter -= Card_MouseEnter;
                 handCards[i].MouseEnter += Card_MouseEnter;
+                handCards[i].MouseLeave -= Card_MouseLeave;
+                handCards[i].MouseLeave += Card_MouseLeave;
                 handCards[i].FlatStyle = FlatStyle.Flat;
                 handCards[i].FlatAppearance.BorderColor = Color.FromArgb(128, 128, 128);
                 handCards[i].FlatAppearance.BorderSize = 2;
@@ -86,6 +86,8 @@ namespace WinFormsApp1.Forms
                 altarCards[i].Click += AltarCard_Click_Wrapper;
                 altarCards[i].MouseEnter -= Card_MouseEnter;
                 altarCards[i].MouseEnter += Card_MouseEnter;
+                altarCards[i].MouseLeave -= Card_MouseLeave;
+                altarCards[i].MouseLeave += Card_MouseLeave;
                 altarCards[i].FlatStyle = FlatStyle.Flat;
                 altarCards[i].FlatAppearance.BorderColor = Color.FromArgb(128, 128, 128);
                 altarCards[i].FlatAppearance.BorderSize = 2;
@@ -133,6 +135,14 @@ namespace WinFormsApp1.Forms
                     }
                     tooltip.Show("Card Value: " + cardValue, button, 0, -25);
                 }
+            }
+        }
+
+        private void Card_MouseLeave(object? sender, EventArgs e)
+        {
+            if (sender is Button button)
+            {
+                tooltip.Hide(button);
             }
         }
 
