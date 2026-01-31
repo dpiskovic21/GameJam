@@ -1,5 +1,7 @@
-﻿using WinFormsApp1.enums;
+﻿using System.Collections.Concurrent;
+using WinFormsApp1.enums;
 using WinFormsApp1.models;
+using WinFormsApp1.service;
 
 namespace WinFormsApp1.Game
 {
@@ -52,6 +54,22 @@ namespace WinFormsApp1.Game
         public static RoundModifierEnum RoundModifier;
         #endregion
 
+        #region Threading
+
+        private static readonly object _scoreLock = new object();
+        private static BlockingCollection<int> _scoreQueue = new BlockingCollection<int>();
+        private static volatile bool _isRunning = false;
+
+        private static void ProcessScores()
+        {
+            foreach (var score in _scoreQueue.GetConsumingEnumerable())
+            {
+                _ = GoogleSheetService.SubmitScore("asdf", score);
+            }
+        }
+
+        #endregion
+
         #region Game Control
 
         //TODO scoring nakon svakog turna za score;
@@ -61,6 +79,14 @@ namespace WinFormsApp1.Game
             TotalScore = 0;
             CurrentBalance = 0;
             IsGameOver = false;
+
+            if (!_isRunning)
+            {
+                _isRunning = true;
+                _scoreQueue = new BlockingCollection<int>();
+                Thread backgroundWorker = new Thread(ProcessScores) { IsBackground = true };
+                backgroundWorker.Start();
+            }
 
             Hand.Clear();
             Altar.Clear();
@@ -210,6 +236,18 @@ namespace WinFormsApp1.Game
             if (Day > MaxDays)
             {
                 IsGameOver = true;
+                lock (_scoreLock)
+                {
+                    int finalScore = TotalScore;
+                    _scoreQueue.Add(finalScore);
+                }
+                _scoreQueue.CompleteAdding();
+                _isRunning = false;
+
+                Hand.Clear();
+                Hand.TrimExcess();
+                Altar.Clear();
+                Altar.TrimExcess();
             }
             else
             {
