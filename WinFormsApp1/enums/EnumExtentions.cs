@@ -17,6 +17,8 @@
                     return "Peek First Deck Card";
                 case RoundModifierEnum.EnergyDebuff:
                     return "Energy Debuff";
+                case RoundModifierEnum.AltarLock:
+                    return "Altar Locked";
                 default:
                     return "";
             }
