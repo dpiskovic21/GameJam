@@ -30,6 +30,7 @@
         {
             labelOver = new Label();
             button1 = new Button();
+            labelScore = new Label();
             SuspendLayout();
             // 
             // labelOver
@@ -46,22 +47,32 @@
             // 
             button1.Location = new Point(657, 426);
             button1.Name = "button1";
-            button1.Size = new Size(262, 23);
+            button1.Size = new Size(262, 64);
             button1.TabIndex = 1;
             button1.Text = "Back to main menu";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
+            // 
+            // labelScore
+            // 
+            labelScore.AutoSize = true;
+            labelScore.Location = new Point(644, 336);
+            labelScore.Name = "labelScore";
+            labelScore.Size = new Size(0, 15);
+            labelScore.TabIndex = 2;
             // 
             // EndForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1904, 1041);
+            Controls.Add(labelScore);
             Controls.Add(button1);
             Controls.Add(labelOver);
             Name = "EndForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "EndForm";
+            Load += EndForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -70,5 +81,6 @@
 
         private Label labelOver;
         private Button button1;
+        private Label labelScore;
     }
 }
