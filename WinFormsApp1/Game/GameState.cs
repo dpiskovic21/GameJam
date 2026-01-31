@@ -166,7 +166,7 @@ namespace WinFormsApp1.Game
 
             if (isPlayerDraw)
             {
-                SFX.PlaySfx($"..\\..\\..\\resources\\card_flip.wav",volume: 0.9f);
+                SFX.PlaySfx($"..\\..\\..\\resources\\card_flip.wav",volume: 1.3f);
                 AvailableEnergy--;
             }
 
@@ -187,7 +187,7 @@ namespace WinFormsApp1.Game
             if (!Hand.Contains(card))
                 return false; // ak slucajne neke sjebeme na fronte
 
-            SFX.PlaySfx($"..\\..\\..\\resources\\card_slide.wav",volume: 0.9f);
+            SFX.PlaySfx($"..\\..\\..\\resources\\card_slide.wav",volume: 2f);
             Hand.Remove(card);
             Altar.Add(card);
             AvailableEnergy--;
@@ -204,7 +204,7 @@ namespace WinFormsApp1.Game
             if (!Altar.Contains(card))
                 return false; // ak se slucajne neke sjebe na fronte
 
-            SFX.PlaySfx($"..\\..\\..\\resources\\card_slide.wav", volume: 0.9f);
+            SFX.PlaySfx($"..\\..\\..\\resources\\card_slide.wav", volume: 2f);
             Altar.Remove(card);
             Hand.Add(card);
             return true;

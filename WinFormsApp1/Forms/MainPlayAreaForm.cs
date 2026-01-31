@@ -299,6 +299,7 @@ namespace WinFormsApp1.Forms
         private async void MainPlayAreaForm_Load(object sender, EventArgs e)
         {
             SFX.StopMusic();
+            SFX.PlaySfx($"..\\..\\..\\resources\\main_game_music.wav", volume: 0.05f);
             if (!_initialized)
             {
                 await SetupComponentsAsync();
