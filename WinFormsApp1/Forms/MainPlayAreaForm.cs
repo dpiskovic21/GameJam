@@ -89,27 +89,8 @@ namespace WinFormsApp1.Forms
 
             GameState.StartNewGame();
 
-            int targetW = 0, targetH = 0;
-            if (MainForm.PnlContainer != null)
-            {
-                targetW = MainForm.PnlContainer.ClientSize.Width;
-                targetH = MainForm.PnlContainer.ClientSize.Height;
-            }
-            else if (this.Parent != null)
-            {
-                targetW = this.Parent.ClientSize.Width;
-                targetH = this.Parent.ClientSize.Height;
-            }
-            else if (this.ClientSize.Width > 0 && this.ClientSize.Height > 0)
-            {
-                targetW = this.ClientSize.Width;
-                targetH = this.ClientSize.Height;
-            }
-            else
-            {
-                targetW = Screen.PrimaryScreen?.WorkingArea.Width ?? 1920;
-                targetH = Screen.PrimaryScreen?.WorkingArea.Height ?? 1080;
-            }
+            int targetW = MainForm.PnlContainer.ClientSize.Width;
+            int targetH = MainForm.PnlContainer.ClientSize.Height;
 
             flowLayoutPanel1.Left = (targetW - flowLayoutPanel1.Width) / 2;
             flowLayoutPanel1.Top = targetH - flowLayoutPanel1.Height - 20;
@@ -273,7 +254,9 @@ namespace WinFormsApp1.Forms
             GameState.EndTurn();
             if (GameState.IsGameOver)
             {
-                MainForm.SetNewForm(new EndForm());
+                var form = new EndForm();
+                form.SetupFormComponents().GetAwaiter().GetResult();
+                MainForm.SetNewForm(form);
             }
             UpdateAll();
         }

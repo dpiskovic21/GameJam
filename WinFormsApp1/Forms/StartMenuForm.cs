@@ -26,8 +26,9 @@ namespace WinFormsApp1.Forms
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            GameState.Username = rtxtUsername.Text;
-            MainForm.SetNewForm(new LoadingForm());
+            var form = new LoadingForm();
+            form.SetupComponents().GetAwaiter().GetResult();
+            MainForm.SetNewForm(form);
         }
 
         private void btnExit_Click(object sender, EventArgs e)

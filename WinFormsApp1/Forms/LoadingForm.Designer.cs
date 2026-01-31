@@ -28,21 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
+            labelLoading = new Label();
             SuspendLayout();
+            // 
+            // labelLoading
+            // 
+            labelLoading.AutoSize = true;
+            labelLoading.Location = new Point(667, 382);
+            labelLoading.Name = "labelLoading";
+            labelLoading.Size = new Size(59, 15);
+            labelLoading.TabIndex = 0;
+            labelLoading.Text = "Loading...";
             // 
             // LoadingForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.loading;
             ClientSize = new Size(1904, 1041);
+            Controls.Add(labelLoading);
             Name = "LoadingForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "LoadingForm";
             Load += LoadingForm_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label labelLoading;
     }
 }
