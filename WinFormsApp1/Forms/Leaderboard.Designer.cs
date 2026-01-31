@@ -37,11 +37,11 @@
             dgvLeaderboard.AllowUserToAddRows = false;
             dgvLeaderboard.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvLeaderboard.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLeaderboard.Location = new Point(413, 119);
+            dgvLeaderboard.Location = new Point(500, 220);
             dgvLeaderboard.Name = "dgvLeaderboard";
             dgvLeaderboard.ReadOnly = true;
             dgvLeaderboard.RowHeadersVisible = false;
-            dgvLeaderboard.Size = new Size(892, 667);
+            dgvLeaderboard.Size = new Size(920, 600);
             dgvLeaderboard.TabIndex = 0;
             // 
             // Leaderboard

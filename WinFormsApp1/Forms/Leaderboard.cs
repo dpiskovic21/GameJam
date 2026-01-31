@@ -41,6 +41,8 @@ namespace WinFormsApp1.Forms
 
         private async void LoadLeaderboardEntries()
         {
+            this.StyleDataGridView();
+
             List<LeaderboardDTO> entries = await GoogleSheetService.getLeaderboardEntries();
             
             dgvLeaderboard.DataSource = entries.Select(e => new
@@ -49,6 +51,26 @@ namespace WinFormsApp1.Forms
                 Score = e.score,
             })
                 .ToList();
+        }
+
+        private void StyleDataGridView()
+        {
+            dgvLeaderboard.EnableHeadersVisualStyles = false;
+
+            dgvLeaderboard.BackgroundColor = Color.Black;
+            dgvLeaderboard.BorderStyle = BorderStyle.None;
+
+            dgvLeaderboard.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dgvLeaderboard.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+
+            dgvLeaderboard.DefaultCellStyle.BackColor = Color.FromArgb(0, 0, 0, 0);
+            dgvLeaderboard.DefaultCellStyle.ForeColor = Color.White;
+            dgvLeaderboard.DefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 255, 255, 255);
+            dgvLeaderboard.DefaultCellStyle.SelectionForeColor = Color.White;
+
+            dgvLeaderboard.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 0, 0, 0);
+            dgvLeaderboard.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvLeaderboard.AllowUserToResizeRows = false;
         }
     }
 }
