@@ -39,7 +39,6 @@ namespace WinFormsApp1.Forms
 
         private void StartMenuForm_Load(object sender, EventArgs e)
         {
-            SFX.PlayMusicLoop("..\\..\\..\\resources\\music.mp3", 0.8f);
             this.BackgroundImage = Deck.ResizeCardImage($"..\\..\\..\\resources\\main-menu.png", this.Parent!.Height, this.Parent.Width);
         }
 

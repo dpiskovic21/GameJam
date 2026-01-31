@@ -1,5 +1,4 @@
-﻿using System.Media;
-using WinFormsApp1.Forms;
+﻿using WinFormsApp1.Forms;
 
 namespace WinFormsApp1
 {
@@ -19,6 +18,7 @@ namespace WinFormsApp1
             MainForm.instance.FormBorderStyle = FormBorderStyle.None;
             MainForm._pnlContainer = pnlContainer;
             MainForm.SetNewForm(new StartMenuForm());
+            SFX.PlayMusicLoop("..\\..\\..\\resources\\music.mp3", 0.8f);
         }
 
         public static void SetNewForm(Form childForm)
