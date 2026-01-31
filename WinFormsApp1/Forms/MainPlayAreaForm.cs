@@ -1,5 +1,4 @@
-﻿using System.Media;
-using WinFormsApp1.Assets;
+﻿using WinFormsApp1.Assets;
 using WinFormsApp1.enums;
 using WinFormsApp1.Game;
 using WinFormsApp1.models;
@@ -118,7 +117,7 @@ namespace WinFormsApp1.Forms
             flowLayoutPanel2.Top = 200;
 
 
-            var path = Path.Combine("..", "..", "..", "resources", "arena.png");
+            var path = Path.Combine("..", "..", "..", "resources", "arena-blur.png");
 
             this.BackgroundImage = await Task.Run(() => Deck.ResizeCardImage(path, targetH, targetW));
 

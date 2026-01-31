@@ -62,6 +62,7 @@
             Name = "EndForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "EndForm";
+            Load += EndForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }
