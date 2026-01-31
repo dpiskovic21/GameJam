@@ -323,7 +323,7 @@ namespace WinFormsApp1.Forms
         private async void MainPlayAreaForm_Load(object sender, EventArgs e)
         {
             SFX.StopMusic();
-            SFX.PlayMusicLoop($"..\\..\\..\\resources\\main_game_music.wav", volume: 0.05f);
+            SFX.PlayMusicLoop($"..\\..\\..\\resources\\music.mp3", volume: 0.05f);
             if (!_initialized)
             {
                 await SetupComponentsAsync();
