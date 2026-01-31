@@ -23,6 +23,7 @@ namespace WinFormsApp1.Game
         public static int TotalScore { get; private set; } = 0;
         public static int CurrentBalance { get; private set; } = 0;
         public static bool IsGameOver { get; private set; } = false;
+        public static string Username { get; set; }
 
         #endregion
 
@@ -65,7 +66,8 @@ namespace WinFormsApp1.Game
         {
             foreach (var score in _scoreQueue.GetConsumingEnumerable())
             {
-                _ = GoogleSheetService.SubmitScore("asdf", score);
+                if (Username == null || Username.Length == 0) continue;
+                _ = GoogleSheetService.SubmitScore(Username, score);
             }
         }
 
@@ -166,7 +168,7 @@ namespace WinFormsApp1.Game
 
             if (isPlayerDraw)
             {
-                SFX.PlaySfx($"..\\..\\..\\resources\\card_flip.wav",volume: 0.9f);
+                SFX.PlaySfx($"..\\..\\..\\resources\\card_flip.wav",volume: 1.3f);
                 AvailableEnergy--;
             }
 
@@ -187,6 +189,7 @@ namespace WinFormsApp1.Game
             if (!Hand.Contains(card))
                 return false; // ak slucajne neke sjebeme na fronte
 
+            SFX.PlaySfx($"..\\..\\..\\resources\\card_slide.wav",volume: 2f);
             Hand.Remove(card);
             Altar.Add(card);
             AvailableEnergy--;
@@ -202,6 +205,8 @@ namespace WinFormsApp1.Game
                 return false;
             if (!Altar.Contains(card))
                 return false; // ak se slucajne neke sjebe na fronte
+
+            SFX.PlaySfx($"..\\..\\..\\resources\\card_slide.wav", volume: 2f);
             Altar.Remove(card);
             Hand.Add(card);
             return true;
@@ -216,6 +221,7 @@ namespace WinFormsApp1.Game
             if (!Altar.Contains(card))
                 return false; // ak se slucajne neke sjebe na fronte
 
+            SFX.PlaySfx($"..\\..\\..\\resources\\discard_card.wav", volume: 0.9f);
             Altar.Remove(card);
             AvailableEnergy--;
 
@@ -241,6 +247,7 @@ namespace WinFormsApp1.Game
                 _scoreQueue.CompleteAdding();
                 _isRunning = false;
 
+                Username = "";
                 Hand.Clear();
                 Hand.TrimExcess();
                 Altar.Clear();

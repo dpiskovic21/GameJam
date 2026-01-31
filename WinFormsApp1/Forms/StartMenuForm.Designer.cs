@@ -31,11 +31,12 @@
             btnStart = new Button();
             btnExit = new Button();
             btnLeaderboard = new Button();
+            rtxtUsername = new RichTextBox();
             SuspendLayout();
             // 
             // btnStart
             // 
-            btnStart.Location = new Point(851, 633);
+            btnStart.Location = new Point(851, 718);
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(233, 90);
             btnStart.TabIndex = 0;
@@ -45,7 +46,7 @@
             // 
             // btnExit
             // 
-            btnExit.Location = new Point(851, 758);
+            btnExit.Location = new Point(851, 910);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(233, 90);
             btnExit.TabIndex = 1;
@@ -55,7 +56,7 @@
             // 
             // btnLeaderboard
             // 
-            btnLeaderboard.Location = new Point(851, 879);
+            btnLeaderboard.Location = new Point(851, 814);
             btnLeaderboard.Name = "btnLeaderboard";
             btnLeaderboard.Size = new Size(233, 90);
             btnLeaderboard.TabIndex = 2;
@@ -63,12 +64,21 @@
             btnLeaderboard.UseVisualStyleBackColor = true;
             btnLeaderboard.Click += btnLeaderboard_Click;
             // 
+            // rtxtUsername
+            // 
+            rtxtUsername.Location = new Point(851, 677);
+            rtxtUsername.Name = "rtxtUsername";
+            rtxtUsername.Size = new Size(233, 31);
+            rtxtUsername.TabIndex = 3;
+            rtxtUsername.Text = "";
+            // 
             // StartMenuForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;
             ClientSize = new Size(1904, 1041);
+            Controls.Add(rtxtUsername);
             Controls.Add(btnLeaderboard);
             Controls.Add(btnExit);
             Controls.Add(btnStart);
@@ -84,5 +94,6 @@
         private Button btnStart;
         private Button btnExit;
         private Button btnLeaderboard;
+        private RichTextBox rtxtUsername;
     }
 }
