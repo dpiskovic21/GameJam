@@ -19,8 +19,6 @@ namespace WinFormsApp1
             MainForm.instance.FormBorderStyle = FormBorderStyle.None;
             MainForm._pnlContainer = pnlContainer;
             MainForm.SetNewForm(new StartMenuForm());
-            SoundPlayer Mcd = new SoundPlayer($"..\\..\\..\\Resources\\ambient.wav");
-            Mcd.PlayLooping();
         }
 
         public static void SetNewForm(Form childForm)
@@ -60,6 +58,7 @@ namespace WinFormsApp1
 
         protected override void OnActivated(EventArgs e)
         {
+            SFX.PlayMusicLoop("..\\..\\..\\resources\\ambient.wav", 0.8f);
             base.OnActivated(e);
             if (activeForm != null)
             {

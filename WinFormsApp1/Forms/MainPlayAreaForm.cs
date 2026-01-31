@@ -298,6 +298,7 @@ namespace WinFormsApp1.Forms
 
         private async void MainPlayAreaForm_Load(object sender, EventArgs e)
         {
+            SFX.StopMusic();
             if (!_initialized)
             {
                 await SetupComponentsAsync();
