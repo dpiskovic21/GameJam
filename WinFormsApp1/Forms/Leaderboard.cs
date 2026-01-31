@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormsApp1.Assets;
 using WinFormsApp1.models;
 using WinFormsApp1.service;
 
@@ -74,6 +75,7 @@ namespace WinFormsApp1.Forms
             dgvLeaderboard.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 0, 0, 0);
             dgvLeaderboard.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             dgvLeaderboard.AllowUserToResizeRows = false;
+            btnExit.Font = CustomFont.GetCustomFontBySize(16);
         }
 
         private void btnExit_Click(object sender, EventArgs e)
