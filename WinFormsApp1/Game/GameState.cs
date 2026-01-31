@@ -219,6 +219,7 @@ namespace WinFormsApp1.Game
             if (!Altar.Contains(card))
                 return false; // ak se slucajne neke sjebe na fronte
 
+            SFX.PlaySfx($"..\\..\\..\\resources\\discard_card.wav", volume: 0.9f);
             Altar.Remove(card);
             AvailableEnergy--;
 
