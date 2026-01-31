@@ -9,7 +9,7 @@ namespace WinFormsApp1.Game
     {
         #region global info (immutable)
 
-        public const int EnergyAvailableEachTurn = 5;
+        public const int EnergyAvailableEachTurn = 3;
         public const int MaxAltarSize = 3;
         public const int MaxDays = 7;
         public const int MaxHandSize = 5;
