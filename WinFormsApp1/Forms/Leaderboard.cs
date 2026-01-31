@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinFormsApp1.models;
+using WinFormsApp1.service;
 
 namespace WinFormsApp1.Forms
 {
@@ -16,6 +17,7 @@ namespace WinFormsApp1.Forms
         public Leaderboard()
         {
             InitializeComponent();
+            LoadLeaderboardEntries();
         }
 
         private void Leaderboard_Load(object sender, EventArgs e)
@@ -35,6 +37,12 @@ namespace WinFormsApp1.Forms
             }
 
             this.BackgroundImage = darkenedImage;
+        }
+
+        private async void LoadLeaderboardEntries()
+        {
+            List<LeaderboardDTO> entries = await GoogleSheetService.getLeaderboardEntries();
+            Console.WriteLine("cool");
         }
     }
 }
