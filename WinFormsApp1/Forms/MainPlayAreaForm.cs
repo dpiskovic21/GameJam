@@ -52,19 +52,16 @@ namespace WinFormsApp1.Forms
             labelDay.Font = CustomFont.GetCustomFontBySize(50);
             labelEnergy.Font = CustomFont.GetCustomFontBySize(16);
             labelCurrentModifier.Font = CustomFont.GetCustomFontBySize(16);
+            labelScore.Font = CustomFont.GetCustomFontBySize(20);
 
             //LABELS
             labelCurrentHandBalance.BackColor = Color.Transparent;
-            labelCurrentHandBalance.ForeColor = Color.White;
             labelCurrentBalance.BackColor = Color.Transparent;
-            labelCurrentBalance.ForeColor = Color.White;
             labelScore.BackColor = Color.Transparent;
-            labelScore.ForeColor = Color.White;
             labelEnergy.BackColor = Color.Transparent;
-            labelEnergy.ForeColor = Color.White;
             labelCurrentModifier.BackColor = Color.Transparent;
-            labelCurrentModifier.ForeColor = Color.White;
             labelDay.BackColor = Color.Transparent;
+            labelScore.BackColor = Color.Transparent;
 
             handCards = new[] { handCard1, handCard2, handCard3, handCard4, handCard5 };
             altarCards = new[] { altarCard1, altarCard2, altarCard3 };
@@ -158,13 +155,13 @@ namespace WinFormsApp1.Forms
                 altarCards[i].Image = ((altarCards[i].Tag) as Card)?.CardImage ?? Deck.CardPlaceholderImage;
             }
 
-            labelCurrentHandBalance.Text = "Current hand balance: " + GameState.CurrentHandBalance;
+            labelCurrentHandBalance.Text = "Current Hand Balance: " + GameState.CurrentHandBalance;
             btnDeck.Text = Deck.ShuffledDeck.Count.ToString() + " / 60";
-            labelEnergy.Text = GameState.AvailableEnergy + " Energy Remaining";
+            labelEnergy.Text = GameState.AvailableEnergy + " / " + GameState.EnergyAvailableEachTurn + " Energy Remaining This Turn";
             labelDay.Text = "Day " + GameState.Day + " / 7";
-            labelCurrentBalance.Text = "Current balance " + GameState.CurrentBalance;
-            labelCurrentModifier.Text = "Current round modifier: " + GameState.RoundModifier.GetDisplayName();
-            labelScore.Text = "Ukupno: " + GameState.TotalScore;
+            labelCurrentBalance.Text = "Global Balance " + GameState.CurrentBalance;
+            labelCurrentModifier.Text = "Current Round Modifier: " + GameState.RoundModifier.GetDisplayName();
+            labelScore.Text = "Total Score: " + GameState.TotalScore;
         }
 
         private void OnHandCardClick(Button handCardControl)

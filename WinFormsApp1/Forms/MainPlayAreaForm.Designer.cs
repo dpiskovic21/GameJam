@@ -66,7 +66,7 @@
             // labelCurrentHandBalance
             // 
             labelCurrentHandBalance.AutoSize = true;
-            labelCurrentHandBalance.Location = new Point(43, 847);
+            labelCurrentHandBalance.Location = new Point(42, 820);
             labelCurrentHandBalance.Name = "labelCurrentHandBalance";
             labelCurrentHandBalance.Size = new Size(0, 15);
             labelCurrentHandBalance.TabIndex = 6;
@@ -74,7 +74,7 @@
             // labelEnergy
             // 
             labelEnergy.AutoSize = true;
-            labelEnergy.Location = new Point(1668, 632);
+            labelEnergy.Location = new Point(42, 887);
             labelEnergy.Name = "labelEnergy";
             labelEnergy.Size = new Size(0, 15);
             labelEnergy.TabIndex = 7;
@@ -111,7 +111,7 @@
             // 
             labelDay.AutoSize = true;
             labelDay.BackColor = Color.Transparent;
-            labelDay.Location = new Point(183, 47);
+            labelDay.Location = new Point(172, 45);
             labelDay.Name = "labelDay";
             labelDay.Size = new Size(0, 15);
             labelDay.TabIndex = 11;
@@ -129,7 +129,7 @@
             // labelCurrentBalance
             // 
             labelCurrentBalance.AutoSize = true;
-            labelCurrentBalance.Location = new Point(1417, 593);
+            labelCurrentBalance.Location = new Point(42, 776);
             labelCurrentBalance.Name = "labelCurrentBalance";
             labelCurrentBalance.Size = new Size(0, 15);
             labelCurrentBalance.TabIndex = 13;
@@ -137,7 +137,7 @@
             // labelScore
             // 
             labelScore.AutoSize = true;
-            labelScore.Location = new Point(1541, 200);
+            labelScore.Location = new Point(172, 110);
             labelScore.Name = "labelScore";
             labelScore.Size = new Size(0, 15);
             labelScore.TabIndex = 16;
@@ -153,7 +153,7 @@
             // labelCurrentModifier
             // 
             labelCurrentModifier.AutoSize = true;
-            labelCurrentModifier.Location = new Point(22, 914);
+            labelCurrentModifier.Location = new Point(42, 925);
             labelCurrentModifier.Name = "labelCurrentModifier";
             labelCurrentModifier.Size = new Size(0, 15);
             labelCurrentModifier.TabIndex = 18;
@@ -180,7 +180,7 @@
             flowLayoutPanel1.Controls.Add(handCard3);
             flowLayoutPanel1.Controls.Add(handCard4);
             flowLayoutPanel1.Controls.Add(handCard5);
-            flowLayoutPanel1.Location = new Point(12, 684);
+            flowLayoutPanel1.Location = new Point(407, 650);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(1031, 319);
             flowLayoutPanel1.TabIndex = 5;
