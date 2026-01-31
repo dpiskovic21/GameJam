@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using WinFormsApp1.Assets;
 using WinFormsApp1.enums;
 using WinFormsApp1.models;
 using WinFormsApp1.service;
@@ -66,7 +65,8 @@ namespace WinFormsApp1.Game
         {
             foreach (var score in _scoreQueue.GetConsumingEnumerable())
             {
-                if (Username == null || Username.Length == 0) continue;
+                if (Username == null || Username.Length == 0)
+                    continue;
                 _ = GoogleSheetService.SubmitScore(Username, score);
             }
         }
@@ -168,7 +168,7 @@ namespace WinFormsApp1.Game
 
             if (isPlayerDraw)
             {
-                SFX.PlaySfx($"..\\..\\..\\resources\\card_flip.wav",volume: 1.3f);
+                SFX.PlaySfx($"..\\..\\..\\resources\\card_flip.wav", volume: 1.3f);
                 AvailableEnergy--;
             }
 
@@ -177,7 +177,7 @@ namespace WinFormsApp1.Game
         #endregion
 
         #region Player Actions
-        
+
         public static bool MoveHandToAltar(Card card) //Todo zamjeni dynamic s klasom
         {
             //TODO mozda dodati se se salje i tekst u ovisnosti radi cega nemre
@@ -189,7 +189,7 @@ namespace WinFormsApp1.Game
             if (!Hand.Contains(card))
                 return false; // ak slucajne neke sjebeme na fronte
 
-            SFX.PlaySfx($"..\\..\\..\\resources\\card_slide.wav",volume: 2f);
+            SFX.PlaySfx($"..\\..\\..\\resources\\card_slide.wav", volume: 2f);
             Hand.Remove(card);
             Altar.Add(card);
             AvailableEnergy--;
@@ -259,6 +259,9 @@ namespace WinFormsApp1.Game
             }
         }
 
+        private static bool lastGlobalWasZero = false;
+        private static int consecutiveZeroMultiplier = 1;
+
         private static int CalculateScoreIternal()
         {
             int balance = CurrentHandBalance;
@@ -272,7 +275,21 @@ namespace WinFormsApp1.Game
             if (balance == 0)
                 roundScore += ScoreMultiplier;
 
-            TotalScore += roundScore;
+            if (CurrentBalance == 0)
+            {
+                if (lastGlobalWasZero)
+                {
+                    consecutiveZeroMultiplier++;
+                }
+                lastGlobalWasZero = true;
+            }
+            else
+            {
+                lastGlobalWasZero = false;
+                consecutiveZeroMultiplier = 1;
+            }
+
+            TotalScore += (roundScore * consecutiveZeroMultiplier);
             return roundScore;
         }
 
