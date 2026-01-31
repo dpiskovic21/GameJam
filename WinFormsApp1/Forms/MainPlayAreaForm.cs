@@ -148,11 +148,20 @@ namespace WinFormsApp1.Forms
                 {
                     handCards[i].Enabled = !card.IsLocked;
                 }
+                else
+                {
+                    handCards[i].Enabled = true;
+                }
             }
 
             for (int i = 0; i < altarCards.Length; i++)
             {
-                altarCards[i].Image = ((altarCards[i].Tag) as Card)?.CardImage ?? Deck.CardPlaceholderImage;
+                var card = ((altarCards[i].Tag) as Card);
+                altarCards[i].Image = card?.CardImage ?? Deck.CardPlaceholderImage;
+                if (card != null)
+                {
+                    altarCards[i].Enabled = !card.IsLocked;
+                }
             }
 
             labelCurrentHandBalance.Text = "Current Hand Balance: " + GameState.CurrentHandBalance;

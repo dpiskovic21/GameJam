@@ -112,6 +112,14 @@ namespace WinFormsApp1.Game
             {
                 AvailableEnergy--;
             }
+            if (RoundModifier == RoundModifierEnum.AltarLock)
+            {
+                Altar.ForEach(x => x.IsLocked = true);
+            }
+            else
+            {
+                Altar.ForEach(x => x.IsLocked = false);
+            }
             DrawCards(5, false);
         }
 
@@ -193,6 +201,11 @@ namespace WinFormsApp1.Game
             Hand.Remove(card);
             Altar.Add(card);
             AvailableEnergy--;
+
+            if (RoundModifier == RoundModifierEnum.AltarLock)
+            {
+                card.IsLocked = true;
+            }
 
             return true;
         }

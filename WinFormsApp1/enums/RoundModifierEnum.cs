@@ -6,7 +6,8 @@
         DarkDoubleValue, //DONE
         EnergyDebuff, //DONE
         LockedHandCard, //DONE
-        PeekFirstCard //DONE
+        PeekFirstCard, //DONE
+        AltarLock,
     }
 
 
